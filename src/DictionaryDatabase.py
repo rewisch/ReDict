@@ -1,6 +1,6 @@
 import os
 import sqlite3
-import DictionaryTools
+from src.DictionaryTools import *
 
 class Database():
     def __init__(self):
@@ -33,7 +33,7 @@ class Database():
         self._commit()
 
     def check_if_exists(self, table, whereColumn, value):
-        self.cursor.execute("SELECT * FROM {0} WHERE {1} = '{2}'".format(table, whereColumn, DictionaryTools.el_qt(value)))
+        self.cursor.execute("SELECT * FROM {0} WHERE {1} = '{2}'".format(table, whereColumn, el_qt(value)))
         data = self.cursor.fetchall()
         if len(data) == 0:
             return False
@@ -63,27 +63,27 @@ class Database():
                                 c.DictionaryId in ({0}) and """.format(dbs))
 
         if not search_like:
-            sql = sql + "Flection = '{0}'".format(DictionaryTools.el_qt(word))
+            sql = sql + "Flection = '{0}'".format(el_qt(word))
         else:
-            sql = sql + "Flection like '%{0}%'".format(DictionaryTools.el_qt(word))
+            sql = sql + "Flection like '%{0}%'".format(el_qt(word))
 
         return self.cursor.execute(sql).fetchall()
 
 
     def write_dictionary(self, book_name, word_count):
-        sql = "Insert Into Dictionary (Name, WordCount) Values ('{0}', {1}) ".format(DictionaryTools.el_qt(book_name), word_count)
+        sql = "Insert Into Dictionary (Name, WordCount) Values ('{0}', {1}) ".format(el_qt(book_name), word_count)
         return self._execute(sql)
 
     def write_word(self, word):
-        sql = "Insert Into Word (Word) Values ('{0}')".format(DictionaryTools.el_qt(word))
+        sql = "Insert Into Word (Word) Values ('{0}')".format(el_qt(word))
         return self._execute(sql)
 
     def write_definition(self, dictionary_id, word_id, definition):
-        sql = "Insert Into Definition (DictionaryId, WordId, Definition) Values ({0}, {1}, '{2}')".format(dictionary_id, word_id, DictionaryTools.el_qt(definition))
+        sql = "Insert Into Definition (DictionaryId, WordId, Definition) Values ({0}, {1}, '{2}')".format(dictionary_id, word_id, el_qt(definition))
         return self._execute(sql)
 
     def write_flection(self, word_id, form, description, is_flection = 0):
-        sql = "Insert Into Flection (WordId, Flection, Description, NoFlection) Values ({0}, '{1}', '{2}', {3})".format(word_id, DictionaryTools.el_qt(form), DictionaryTools.el_qt(description), is_flection)
+        sql = "Insert Into Flection (WordId, Flection, Description, NoFlection) Values ({0}, '{1}', '{2}', {3})".format(word_id, el_qt(form), el_qt(description), is_flection)
         return self._execute(sql)
 
     def write_history(self, word_id):

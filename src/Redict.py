@@ -4,12 +4,12 @@ from PyQt5 import uic, QtWidgets, QtGui
 from PyQt5.QtCore import QFile, QTextStream, Qt, QSettings, QThreadPool, QRunnable, pyqtSlot, QObject, pyqtSignal, QSize, QEvent
 from PyQt5.QtWidgets import QAction, qApp, QScroller, QCompleter, QToolBar
 from PyQt5.QtGui import QColor, QIcon
-from DictionaryDatabase import Database
+from src.DictionaryDatabase import Database
 import pyperclip
 import time
 from bs4 import BeautifulSoup
-from AutoCompleterDwg import AutoComplete
-from DictionaryWaitingSpinner import QtWaitingSpinner
+from src.AutoCompleterDwg import AutoComplete
+from src.DictionaryWaitingSpinner import QtWaitingSpinner
 from math import ceil
 
 subThread = True
