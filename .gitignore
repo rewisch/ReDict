@@ -130,3 +130,7 @@ dmypy.json
 
 *.db
 .DS_Store
+
+.idea/inspectionProfiles/profiles_settings.xml
+
+.idea/

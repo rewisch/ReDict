@@ -256,6 +256,7 @@ class SearchDialog(QtWidgets.QMainWindow, AllWindows):
             g = event.gesture(Qt.PinchGesture)
             f = event.gesture(Qt.TapAndHoldGesture)
             print(f)
+            print(g)
             scale = g.scaleFactor()
             fontsize = ceil(fontsize * scale)
             self.zoom_fix(fontsize)
