@@ -44,7 +44,7 @@ class AllWindows():
 
     def save_form_pers(self, _class):
         _class.settings.setValue("geometry", _class.saveGeometry())
-        if isinstance(_class, SearchDialog):
+        if isinstance(_class, MainWindow):
             _class.settings.setValue("windowState", _class.saveState())
 
     def closeEvent(self, event):
@@ -161,7 +161,7 @@ class Dicts(QtWidgets.QDialog, AllWindows):
         self.db.set_property(1, ','.join(self.values))
 
 
-class SearchDialog(QtWidgets.QMainWindow, AllWindows):
+class MainWindow(QtWidgets.QMainWindow, AllWindows):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
         AllWindows.__init__(self)
@@ -255,8 +255,6 @@ class SearchDialog(QtWidgets.QMainWindow, AllWindows):
             fontsize = int(self.db.get_property(2))
             g = event.gesture(Qt.PinchGesture)
             f = event.gesture(Qt.TapAndHoldGesture)
-            print(f)
-            print(g)
             scale = g.scaleFactor()
             fontsize = ceil(fontsize * scale)
             self.zoom_fix(fontsize)
@@ -366,7 +364,7 @@ class SearchDialog(QtWidgets.QMainWindow, AllWindows):
         if word == '':
             return
         else:
-            lookup_dialog(word)
+            LookupDialog(word)
 
     def set_result(self, result):
         self.ui.txtResult.append(result)
@@ -405,7 +403,7 @@ class SearchDialog(QtWidgets.QMainWindow, AllWindows):
         self.save_form_pers(self)
         QtWidgets.QMainWindow.closeEvent(self, event)
 
-class lookup_dialog(QtWidgets.QDialog, AllWindows):
+class LookupDialog(QtWidgets.QDialog, AllWindows):
     def __init__(self, word):
         QtWidgets.QDialog.__init__(self)
         AllWindows.__init__(self)
@@ -445,7 +443,7 @@ class lookup_dialog(QtWidgets.QDialog, AllWindows):
         if word == '':
             return
         else:
-            lookup_dialog(word)
+            LookupDialog(word)
 
 class History(QtWidgets.QDialog, AllWindows):
     def __init__(self, searchFunc):
@@ -502,7 +500,7 @@ file.open(QFile.ReadOnly | QFile.Text)
 stream = QTextStream(file)
 app.setStyleSheet(stream.readAll())
 
-sd = SearchDialog()
+sd = MainWindow()
 sd.show()
 
 sys.exit(app.exec())
