@@ -26,7 +26,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon.png</normaloff>icon.png</iconset>
+    <normaloff>icons/icon.png</normaloff>icons/icon.png</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>

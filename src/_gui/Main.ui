@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon.png</normaloff>icon.png</iconset>
+    <normaloff>icons/icon.png</normaloff>icons/icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -84,7 +84,7 @@
      <x>0</x>
      <y>0</y>
      <width>923</width>
-     <height>24</height>
+     <height>34</height>
     </rect>
    </property>
    <property name="font">
@@ -150,7 +150,7 @@
   <action name="actionQuit">
    <property name="icon">
     <iconset>
-     <normaloff>tbQuit.png</normaloff>tbQuit.png</iconset>
+     <normaloff>icons/tbQuit.png</normaloff>icons/tbQuit.png</iconset>
    </property>
    <property name="text">
     <string>Quit</string>
@@ -167,7 +167,7 @@
   <action name="actionAbout_redict">
    <property name="icon">
     <iconset>
-     <normaloff>tbAbout.png</normaloff>tbAbout.png</iconset>
+     <normaloff>icons/tbAbout.png</normaloff>icons/tbAbout.png</iconset>
    </property>
    <property name="text">
     <string>About 'Redict'</string>
@@ -181,7 +181,7 @@
   <action name="actionDictionaries">
    <property name="icon">
     <iconset>
-     <normaloff>icon.png</normaloff>icon.png</iconset>
+     <normaloff>icons/icon.png</normaloff>icons/icon.png</iconset>
    </property>
    <property name="text">
     <string>Dicts</string>
@@ -195,7 +195,7 @@
   <action name="actionZoom_In">
    <property name="icon">
     <iconset>
-     <normaloff>tbZoomIn.png</normaloff>tbZoomIn.png</iconset>
+     <normaloff>icons/tbZoomIn.png</normaloff>icons/tbZoomIn.png</iconset>
    </property>
    <property name="text">
     <string>Zoom In</string>
@@ -209,7 +209,7 @@
   <action name="actionZoom_Out">
    <property name="icon">
     <iconset>
-     <normaloff>tbZoomOut.png</normaloff>tbZoomOut.png</iconset>
+     <normaloff>icons/tbZoomOut.png</normaloff>icons/tbZoomOut.png</iconset>
    </property>
    <property name="text">
     <string>Zoom Out</string>
@@ -223,7 +223,7 @@
   <action name="actionManage_History">
    <property name="icon">
     <iconset>
-     <normaloff>tbHistory.png</normaloff>tbHistory.png</iconset>
+     <normaloff>icons/tbHistory.png</normaloff>icons/tbHistory.png</iconset>
    </property>
    <property name="text">
     <string>Browse</string>
@@ -242,7 +242,7 @@
   <action name="actionCompleter">
    <property name="icon">
     <iconset>
-     <normaloff>tbCompleter.png</normaloff>tbCompleter.png</iconset>
+     <normaloff>icons/tbCompleter.png</normaloff>icons/tbCompleter.png</iconset>
    </property>
    <property name="text">
     <string>Completer</string>
