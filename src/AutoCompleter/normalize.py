@@ -1,5 +1,5 @@
 import string
-from AutoCompleterLfucache import LFUCache
+from src.AutoCompleter.lfucache import LFUCache
 
 valid_chars_for_string = {i for i in string.ascii_letters.lower()}
 valid_chars_for_integer = {i for i in string.digits}

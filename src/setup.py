@@ -9,25 +9,25 @@ from setuptools import setup
 
 APP = ['Redict.py']
 DATA_FILES = [
-    ('gui', ['gui/About.ui',
-             'gui/completer.ui',
-             'gui/dicts.ui',
-             'gui/History.ui',
-             'gui/lookup.ui',
-             'gui/Main.ui',
-             'gui/icon.png',
-             'gui/tbZoomOut.png',
-             'gui/tbZoomIn.png',
-             'gui/tbQuit.png',
-             'gui/tbLookup.png',
-             'gui/tbHistory.png',
-             'gui/tbCompleter.png',
-             'gui/tbAbout.png']
+    ('_gui', ['_gui/About.ui',
+             '_gui/completer.ui',
+             '_gui/dicts.ui',
+             '_gui/History.ui',
+             '_gui/lookup.ui',
+             '_gui/Main.ui',
+             '_gui/icon.png',
+             '_gui/tbZoomOut.png',
+             '_gui/tbZoomIn.png',
+             '_gui/tbQuit.png',
+             '_gui/tbLookup.png',
+             '_gui/tbHistory.png',
+             '_gui/tbCompleter.png',
+             '_gui/tbAbout.png']
      ),
-    ('gui/stylesheets', ['gui/stylesheets/AMOLED.qss']),
-    ('database', ['database/dictionaries_db.db'])
+    ('_gui/stylesheets', ['_gui/stylesheets/AMOLED.qss']),
+    ('_database', ['_database/dictionaries_db.db'])
 ]
-OPTIONS = {'iconfile': 'gui/icon.icns'}
+OPTIONS = {'iconfile': '_gui/icon.icns'}
 
 setup(
     name = 'Redict',

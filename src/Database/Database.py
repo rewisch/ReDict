@@ -1,10 +1,10 @@
 import os
 import sqlite3
-from src.DictionaryTools import *
+from src.Misc.tools import *
 
 class Database():
     def __init__(self):
-        self.db_connection = sqlite3.connect(os.path.abspath('database/dictionaries_db.db'))
+        self.db_connection = sqlite3.connect(os.path.abspath('./_database/dictionaries_db.db'))
         self.cursor = self.db_connection.cursor()
 
     def truncate_database(self):

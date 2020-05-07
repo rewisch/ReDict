@@ -1,15 +1,16 @@
 import sys
 import os
 from PyQt5 import uic, QtWidgets, QtGui
-from PyQt5.QtCore import QFile, QTextStream, Qt, QSettings, QThreadPool, QRunnable, pyqtSlot, QObject, pyqtSignal, QSize, QEvent
-from PyQt5.QtWidgets import QAction, qApp, QScroller, QCompleter, QToolBar
+from PyQt5.QtCore import QFile, QTextStream, Qt, QSettings, QThreadPool, QRunnable, pyqtSlot, QObject, pyqtSignal, \
+    QEvent
+from PyQt5.QtWidgets import QAction, qApp, QScroller, QCompleter
 from PyQt5.QtGui import QColor, QIcon
-from src.DictionaryDatabase import Database
+from src.Database.Database import Database
 import pyperclip
 import time
 from bs4 import BeautifulSoup
-from src.AutoCompleterDwg import AutoComplete
-from src.DictionaryWaitingSpinner import QtWaitingSpinner
+from src.AutoCompleter.dwg import AutoComplete
+from src.Gui.WaitingSpinner import QtWaitingSpinner
 from math import ceil
 
 subThread = True
@@ -91,7 +92,7 @@ class Completer(QtWidgets.QDialog, AllWindows):
 
 
     def init_ui(self):
-        self.ui = uic.loadUi(os.path.abspath('gui/completer.ui'), self)
+        self.ui = uic.loadUi(os.path.abspath('_gui/completer.ui'), self)
         QScroller.grabGesture(self.textEdit.viewport(), QScroller.LeftMouseButtonGesture)
 
         self.prop = self.db.get_property(4)
@@ -124,7 +125,7 @@ class Dicts(QtWidgets.QDialog, AllWindows):
         self.load_form_pers(self)
 
     def init_ui(self):
-        self.ui = uic.loadUi(os.path.abspath('gui/dicts.ui'), self)
+        self.ui = uic.loadUi(os.path.abspath('_gui/dicts.ui'), self)
 
         ret = self.db.get_dictionaries()
         self.values = self.db.get_property(1)
@@ -170,7 +171,7 @@ class MainWindow(QtWidgets.QMainWindow, AllWindows):
 
 
     def init_ui(self):
-        self.ui = uic.loadUi(os.path.abspath("gui/main.ui"), self)
+        self.ui = uic.loadUi(os.path.abspath("_gui/main.ui"), self)
         self.search = Search()
         self.SetComp = True
         self.load_form_pers(self)
@@ -234,7 +235,7 @@ class MainWindow(QtWidgets.QMainWindow, AllWindows):
 
         self.ui.txtResult.setContextMenuPolicy(Qt.ActionsContextMenu)
 
-        lookup = QAction(QIcon('gui/tbLookup.png'), "look-up", self)
+        lookup = QAction(QIcon('_gui/tbLookup.png'), "look-up", self)
         lookup.triggered.connect(self.look_up)
         self.ui.txtResult.addAction(lookup)
 
@@ -413,7 +414,7 @@ class LookupDialog(QtWidgets.QDialog, AllWindows):
         self.load_form_pers(self)
 
     def init_ui(self):
-        self.ui = uic.loadUi(os.path.abspath("gui/lookup.ui"), self)
+        self.ui = uic.loadUi(os.path.abspath("_gui/lookup.ui"), self)
         self.font = QtGui.QFont()
         self.font.setPointSize(int(self.db.get_property(2)))
         self.ui.txtResultLookup.setFont(self.font)
@@ -453,7 +454,7 @@ class History(QtWidgets.QDialog, AllWindows):
         self.load_form_pers(self)
 
     def init_ui(self):
-        self.ui = uic.loadUi(os.path.abspath('gui/History.ui'), self)
+        self.ui = uic.loadUi(os.path.abspath('_gui/History.ui'), self)
 
         self.ui.listWidget.itemDoubleClicked.connect(self.test)
         self.ui.btnClearHistory.clicked.connect(self.clear)
@@ -482,7 +483,7 @@ class About(QtWidgets.QDialog, AllWindows):
         self.load_form_pers(self)
 
     def init_ui(self):
-        self.ui = uic.loadUi(os.path.abspath('gui/About.ui'), self)
+        self.ui = uic.loadUi(os.path.abspath('_gui/About.ui'), self)
         QScroller.grabGesture(self.textBrowser.viewport(), QScroller.LeftMouseButtonGesture)
         self.ui.show()
 
@@ -495,7 +496,7 @@ class MySignal(QObject):
 
 app = QtWidgets.QApplication(sys.argv)
 
-file = QFile("gui/stylesheets/AMOLED.qss")
+file = QFile("_gui/stylesheets/AMOLED.qss")
 file.open(QFile.ReadOnly | QFile.Text)
 stream = QTextStream(file)
 app.setStyleSheet(stream.readAll())

@@ -5,9 +5,9 @@ from collections import (
 from itertools import islice
 from enum import Enum
 from threading import Lock
-from AutoCompleterLfucache import LFUCache
-from AutoCompleterMisc import _extend_and_repeat
-from AutoCompleterNormalize import normalize_node_name
+from src.AutoCompleter.lfucache import LFUCache
+from src.AutoCompleter.misc import _extend_and_repeat
+from src.AutoCompleter.normalize import normalize_node_name
 from Levenshtein import distance as levenshtein_distance
 
 DELIMITER = '__'
