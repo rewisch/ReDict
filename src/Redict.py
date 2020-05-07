@@ -454,7 +454,7 @@ class History(QtWidgets.QDialog, AllWindows):
         self.load_form_pers(self)
 
     def init_ui(self):
-        self.ui = uic.loadUi(os.path.abspath('_gui/History.ui'), self)
+        self.ui = uic.loadUi(os.path.abspath('_gui/history.ui'), self)
 
         self.ui.listWidget.itemDoubleClicked.connect(self.test)
         self.ui.btnClearHistory.clicked.connect(self.clear)
