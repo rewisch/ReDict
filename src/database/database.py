@@ -4,7 +4,7 @@ from src.misc.tools import *
 
 class Database():
     def __init__(self):
-        
+
         self.db_connection = sqlite3.connect(os.path.abspath('./_database/dictionaries_db.db'))
         self.cursor = self.db_connection.cursor()
 
@@ -25,16 +25,16 @@ class Database():
         return self.cursor.execute(sql).fetchall()
 
     def get_property(self, property_id):
-        sql = 'select Value From Property where PropertyId = {0}'.format(property_id)
+        sql = f'select Value From Property where PropertyId = {property_id}'
         return self.cursor.execute(sql).fetchone()[0]
 
     def set_property(self, property_id, value):
-        sql = "Update Property Set Value = '{0}'  where PropertyId = {1}".format(value, property_id)
+        sql = f"Update Property Set Value = '{value}'  where PropertyId = {property_id}"
         self._execute(sql)
         self._commit()
 
     def check_if_exists(self, table, whereColumn, value):
-        self.cursor.execute("SELECT * FROM {0} WHERE {1} = '{2}'".format(table, whereColumn, el_qt(value)))
+        self.cursor.execute(f"SELECT * FROM {table} WHERE {whereColumn} = '{el_qt(value)}'")
         data = self.cursor.fetchall()
         if len(data) == 0:
             return False
@@ -47,7 +47,7 @@ class Database():
         if dbs == '[]':
             return None
 
-        sql = ("""select distinct 
+        sql = (f"""select distinct 
                                 b.WordId, 
                                 b.Word, 
                                 c.Definition, 
@@ -61,34 +61,35 @@ class Database():
                             inner join 
                                 Dictionary as d on c.DictionaryId = d.DictionaryId
                            where
-                                c.DictionaryId in ({0}) and """.format(dbs))
+                                c.DictionaryId in ({dbs}) and """
+               )
 
         if not search_like:
-            sql = sql + "Flection = '{0}'".format(el_qt(word))
+            sql = sql + f"Flection = '{el_qt(word)}'"
         else:
-            sql = sql + "Flection like '%{0}%'".format(el_qt(word))
+            sql = sql + f"Flection like '%{el_qt(word)}%'"
 
         return self.cursor.execute(sql).fetchall()
 
 
     def write_dictionary(self, book_name, word_count):
-        sql = "Insert Into Dictionary (Name, WordCount) Values ('{0}', {1}) ".format(el_qt(book_name), word_count)
+        sql = f"Insert Into Dictionary (Name, WordCount) Values ('{el_qt(book_name)}', {word_count}) "
         return self._execute(sql)
 
     def write_word(self, word):
-        sql = "Insert Into Word (Word) Values ('{0}')".format(el_qt(word))
+        sql = f"Insert Into Word (Word) Values ('{el_qt(word)}')"
         return self._execute(sql)
 
     def write_definition(self, dictionary_id, word_id, definition):
-        sql = "Insert Into Definition (DictionaryId, WordId, Definition) Values ({0}, {1}, '{2}')".format(dictionary_id, word_id, el_qt(definition))
+        sql = f"Insert Into Definition (DictionaryId, WordId, Definition) Values ({dictionary_id}, {word_id}, '{el_qt(definition)}')"
         return self._execute(sql)
 
     def write_flection(self, word_id, form, description, is_flection = 0):
-        sql = "Insert Into Flection (WordId, Flection, Description, NoFlection) Values ({0}, '{1}', '{2}', {3})".format(word_id, el_qt(form), el_qt(description), is_flection)
+        sql = f"Insert Into Flection (WordId, Flection, Description, NoFlection) Values ({word_id}, '{el_qt(form)}', '{el_qt(description)}', {is_flection})"
         return self._execute(sql)
 
     def write_history(self, word_id):
-        sql = "Insert Into History (WordId) Values ({0}) ".format(word_id)
+        sql = f"Insert Into History (WordId) Values ({word_id})"
         self._execute(sql)
         self._commit()
 

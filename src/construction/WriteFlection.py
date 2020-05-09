@@ -1,8 +1,9 @@
 import cltk
 from cltk.stem.latin.declension import CollatinusDecliner
 from tqdm import tqdm
-import DictionaryTools
-from DictionaryDatabase import Database
+
+import src.misc.tools as tl
+from src.database.database import Database
 
 class WriteFlection():
 
@@ -32,7 +33,7 @@ class WriteFlectionWithDeclination(WriteFlection):
     def write(self):
         for d in tqdm(self.data):
             word_id, word = d
-            word = DictionaryTools.rpl_chunk(word)
+            word = tl.rpl_chunk(word)
             try:
                 declined_word = self.decliner.decline(word)
                 for dw in declined_word:
@@ -56,6 +57,6 @@ class WriteFlectionWithoutDeclination(WriteFlection):
     def write(self):
         for d in tqdm(self.data):
             word_id, word = d
-            word = DictionaryTools.rpl_chunk(word)
+            word = tl.rpl_chunk(word)
             self.db.write_flection(word_id, word, '', 1)
         self.db._commit()
