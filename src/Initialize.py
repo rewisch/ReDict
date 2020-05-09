@@ -2,8 +2,9 @@
 #####Important: not yet ensured, that the lemmata json is in the cltk folder, gotta do that
 
 from pathlib import Path
-from os import listdir
-from os.path import abspath, join
+from os import listdir, makedirs
+from shutil import copy2
+from os.path import abspath, join, normpath, expanduser
 import zipfile
 
 from cltk.corpus.utils.importer import CorpusImporter
@@ -19,8 +20,19 @@ class init_database():
         self.run()
 
     def run(self):
+        print('\nInstall Cltk Corpus\n')
         corpus_importer = CorpusImporter('latin')
         corpus_importer.import_corpus('latin_text_latin_library')
+
+        print('\nInstall latin models\n')
+        cltk_folder = expanduser(normpath('~/cltk_data'))
+        try:
+            makedirs(join(cltk_folder, 'latin/model/latin_models_cltk/lemmata/collatinus'))
+        except:
+            print('cltk-folder exists')
+
+        copy2(abspath('../data/collected.json'), join(cltk_folder, 'latin/model/latin_models_cltk/lemmata/collatinus' ))
+
 
         init = Initialize()
 
