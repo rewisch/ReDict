@@ -5,3 +5,4 @@ pyperclip==1.8.0
 cltk=0.1.117
 tqdm=4.46.
 PyStarDict=0.8
+lxml=4.5.0

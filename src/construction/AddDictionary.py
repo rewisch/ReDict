@@ -37,10 +37,10 @@ class import_dictionary():
 
 class stardict(import_dictionary):
 
-    def __init__(self, stardict_db_folder, stardict_db_name):
+    def __init__(self, path, stardict_db_folder, stardict_db_name):
         import_dictionary.__init__(self)
-        self.dicts_dir = os.path.join(os.path.dirname(__file__))
-        self.dict1 = Dictionary(os.path.join(self.dicts_dir, stardict_db_folder,stardict_db_name))
+        #self.dicts_dir = os.path.join(os.path.dirname(__file__))
+        self.dict1 = Dictionary(os.path.join(path, stardict_db_folder,stardict_db_name))
 
     def add_words_to_dictionary(self):
         try:
@@ -52,6 +52,7 @@ class stardict(import_dictionary):
                 definition = self.dict1.get(word)
                 self.db.write_definition(dictionary_id, word_id, definition)
             self.db._commit()
+            return dictionary_id
         except:
             self.db.db_connection.rollback()
             raise
@@ -76,6 +77,7 @@ class perseus(import_dictionary):
                 definition = w[1]
                 self.db.write_definition(dictionary_id, word_id, definition)
             self.db._commit()
+            return dictionary_id
         except:
             self.db.db_connection.rollback()
             raise

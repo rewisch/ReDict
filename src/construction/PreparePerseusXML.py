@@ -1,10 +1,14 @@
+from os.path import abspath, join
+
 from bs4 import BeautifulSoup
 from tqdm import tqdm
+
+folder_path = abspath('../data/dictionaries/lewis_short/')
 
 def perseus_xml_read():
 
     replaces = list()
-    file = open('dictionaries/lewis_short/sed_commands.txt', 'r')
+    file = open(join(folder_path,'sed_commands.txt'), 'r', encoding='Utf-8')
     input = file.readlines()
 
     for i in input:
@@ -14,7 +18,7 @@ def perseus_xml_read():
 
     file.close()
 
-    _xml = open('dictionaries/lewis_short/lewis.xml', 'r')
+    _xml = open(join(folder_path, 'lewis.xml'), 'r', encoding='Utf-8')
     content = _xml.read()
 
     print('\nPrepare XML File:\n')
@@ -22,12 +26,12 @@ def perseus_xml_read():
         rep, rep_with = rep
         content = content.replace(rep, rep_with)
 
-    _xmlNew = open('dictionaries/lewis_short/lewis_rep.xml','w')
+    _xmlNew = open(join(folder_path, 'lewis_rep.xml'), 'w', encoding='Utf-8')
     _xmlNew.write(content)
 
     print('\nRead XML File:\n')
 
-    content = open('dictionaries/lewis_short/lewis_rep.xml')
+    content = open(join(folder_path, 'lewis_rep.xml'), encoding='Utf-8')
     soup = BeautifulSoup(content, 'xml')
 
     lst_lewis = list()

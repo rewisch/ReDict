@@ -13,7 +13,7 @@ class Database():
               "delete From Word",
               "delete From Definition",
               "delete From Flection",
-              "update sqlite_sequence  set seq = 0",
+              "update sqlite_sequence  set seq = 0 where name in ('Flection', 'Definition', 'Word', 'Dictionary')"
                ]
 
         for s in sql:
@@ -30,6 +30,11 @@ class Database():
 
     def set_property(self, property_id, value):
         sql = f"Update Property Set Value = '{value}'  where PropertyId = {property_id}"
+        self._execute(sql)
+        self._commit()
+
+    def create_property(self, property_id, value, description):
+        sql = f"Insert Into Property (PropertyId, Value, Description) Values ({property_id}, '{value}', '{description}')"
         self._execute(sql)
         self._commit()
 

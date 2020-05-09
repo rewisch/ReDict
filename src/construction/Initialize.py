@@ -3,23 +3,41 @@ from src.construction.WriteFlection import WriteFlectionWithDeclination
 from src.construction.WriteFlection import WriteFlectionWithoutDeclination
 from src.database.database import Database
 
-db = Database()
-db.truncate_database()
+class Initialize():
 
-########Dict 1
-new_st_dict = stardict('dictionaries/georges_de-lat', 'georges')
-new_st_dict.add_words_to_dictionary()
-new = WriteFlectionWithoutDeclination(1)
-new.write()
+    def __init__(self):
+        db = Database()
+        db.truncate_database()
 
-#######Dict2
-new_st_dict = stardict('dictionaries/georges_lat-de', 'stardict')
-new_st_dict.add_words_to_dictionary()
-new = WriteFlectionWithDeclination(2)
-new.write()
+    def import_db(self, path, folder_name):
 
-######Perseus Lewis Dictioanry
-new = perseus('Lewis, Charlton, T. - An Elementary Latin Dictionary', 17582)
-new.add_words_to_dictionary()
-new = WriteFlectionWithDeclination(3)
-new.write()
+        if folder_name == 'georges_de-lat':
+            file_name = 'georges'
+        elif folder_name == 'georges_lat-de':
+            file_name = 'stardict'
+        elif folder_name == 'lewis_short':
+            file_name = ''
+        else:
+            raise FileNotFoundError('No Dictionary found')
+
+        if folder_name == 'georges_de-lat':
+            new_st_dict = stardict(path, folder_name, file_name)
+            dictionary_id = new_st_dict.add_words_to_dictionary()
+            new = WriteFlectionWithoutDeclination(dictionary_id)
+            new.write()
+            del new_st_dict
+            del new
+
+        elif folder_name == 'georges_lat-de':
+            new_st_dict = stardict(path, folder_name, file_name)
+            dictionary_id = new_st_dict.add_words_to_dictionary()
+            new = WriteFlectionWithDeclination(dictionary_id)
+            new.write()
+            del new_st_dict
+            del new
+
+        elif folder_name == 'lewis_short':
+            new = perseus('Lewis, Charlton, T. - An Elementary Latin Dictionary', 17582)
+            dictionary_id = new.add_words_to_dictionary()
+            new = WriteFlectionWithDeclination(dictionary_id)
+            new.write()
