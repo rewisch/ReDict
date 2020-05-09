@@ -1,4 +1,4 @@
-# ReDict
+# ReDict - A Latin Dictionary 
 
 Attention: The dictionary works at the moment if you have a Database with all the data. The database isn't distributed over GitHub due to it's size. But I'll write a routine to Initialize the database soon.
 
