@@ -1,17 +1,15 @@
 import os
 from math import ceil
-import time
 
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from PyQt5 import uic, QtWidgets, QtGui
-from PyQt5.QtCore import Qt, QThreadPool, QEvent
+from PyQt5.QtCore import Qt, QThreadPool, QEvent, QTimer
 from PyQt5.QtWidgets import QAction, qApp, QScroller, QCompleter
 from PyQt5.QtGui import QColor, QIcon
-import pyperclip
 
 from src.database.database import Database
 from src.autocompleter.dwg import AutoComplete
-from src.gui.WaitingSpinner import QtWaitingSpinner
+from src.gui.waitingspinner import QtWaitingSpinner
 from src.database.search import Search
 from src.gui.all_windows import AllWindows
 from src.misc.mysignal import MySignal
@@ -24,6 +22,7 @@ from src.misc.completer import Completer
 
 subThread = True
 autocomplete = None
+clipboard_event = False
 
 class MainWindow(QMainWindow, AllWindows):
     def __init__(self):
@@ -78,15 +77,11 @@ class MainWindow(QMainWindow, AllWindows):
         AboutAct = self.ui.actionAbout_redict
         AboutAct.triggered.connect(self.about)
 
-        #Create Signal and Threads for ClipboardChecker
-
-        self.signal.sig_with_str.connect(self.handle_signal)
         self.signal.startLoading.connect(self.loading)
         self.signal.stopLoading.connect(self.stop_loading)
 
         self.threadpool = QThreadPool()
         self.open_thread()
-        self.open_thread2()
 
         self.completer = QCompleter([])
         self.completer.setFilterMode(Qt.MatchContains)
@@ -109,9 +104,33 @@ class MainWindow(QMainWindow, AllWindows):
 
         self.ui.txtResult.installEventFilter(self)
         self.ui.txtResult.grabGesture(Qt.PinchGesture)
-        #self.ui.txtResult.grabGesture(Qt.TapAndHoldGesture)
+        self.ui.txtResult.grabGesture(Qt.TapAndHoldGesture)
 
         QScroller.grabGesture(self.txtResult.viewport(), QScroller.LeftMouseButtonGesture)
+
+        self.clip = QApplication.clipboard()
+        self.clip.changed.connect(self.clipboard_changed)
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.watch_clipboard)
+        self.timer.start(5000)
+
+
+    def watch_clipboard(self):
+        global clipboard_event
+        clipboard_event = False
+
+    def clipboard_changed(self):
+        global clipboard_event
+        if clipboard_event:
+            word = self.clip.text()
+            cursor = self.txtResult.textCursor()
+            sel = cursor.selectedText()
+            if word != sel:
+                self.search_word(word)
+            self.bring_to_front()
+        else:
+            clipboard_event = True
 
     def eventFilter(self, o, event):
         #handle pinch event from txtResult
@@ -119,10 +138,13 @@ class MainWindow(QMainWindow, AllWindows):
             fontsize = int(self.db.get_property(2))
             g = event.gesture(Qt.PinchGesture)
             f = event.gesture(Qt.TapAndHoldGesture)
-            scale = g.scaleFactor()
-            fontsize = ceil(fontsize * scale)
-            self.zoom_fix(fontsize)
-            self.ui.update()
+            if g != None:
+                scale = g.scaleFactor()
+                fontsize = ceil(fontsize * scale)
+                self.zoom_fix(fontsize)
+                self.ui.update()
+            if f != None:
+                pass
             return True
         elif 0 == 0:
             pass
@@ -135,16 +157,6 @@ class MainWindow(QMainWindow, AllWindows):
         self.txtSearch.setPlaceholderText("Enter the word you want to look-up")
         self.txtSearch.setFocus()
 
-    def check_clipboard(self):
-        global subThread
-        recent_value = pyperclip.paste()
-        while subThread:
-            tmp_value = pyperclip.paste()
-            if tmp_value != recent_value:
-                recent_value = tmp_value
-                self.signal.sig_with_str.emit(recent_value.lstrip().rstrip().replace(',', '').replace('.', ''))
-            time.sleep(0.1)
-
     def txt_search_changed(self, changeValue):
         global autocomplete
         entries = list()
@@ -155,12 +167,8 @@ class MainWindow(QMainWindow, AllWindows):
         model.setStringList(entries)
 
     def open_thread(self):
-        worker = Worker(self.check_clipboard)
+        worker = Worker(self.initialize_things)
         self.threadpool.start(worker)
-
-    def open_thread2(self):
-        worker2 = Worker(self.initialize_things)
-        self.threadpool.start(worker2)
 
     def initialize_things(self):
         self.signal.startLoading.emit()
@@ -180,19 +188,13 @@ class MainWindow(QMainWindow, AllWindows):
         autocomplete = AutoComplete(words=words)
         self.signal.stopLoading.emit()
 
-    def handle_signal(self, word):
-        cursor = self.txtResult.textCursor()
-        sel = cursor.selectedText()
-        if word != sel:
-            self.search_word(word)
-        self.bring_to_front()
-
     def bring_to_front(self):
             """ Brings the terminal window to the front and places the cursor in the textbox """
             self.txtSearch.setFocus()
             self.setWindowState(self.windowState() & ~Qt.WindowMinimized | Qt.WindowActive)
             self.raise_()
             self.activateWindow()
+            self.show()
 
     def keyPressEvent(self, qKeyEvent):
         if qKeyEvent.key() == Qt.Key_Return:

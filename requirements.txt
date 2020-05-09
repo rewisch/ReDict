@@ -1,7 +1,6 @@
 PyQt5==5.14.2
 bs4==0.0.1
 Python-Levenshtein==0.12.0
-pyperclip==1.8.0
 cltk=0.1.117
 tqdm=4.46.
 PyStarDict=0.8
