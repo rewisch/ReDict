@@ -16,6 +16,7 @@ from src.gui.lookup import LookupDialog
 from src.gui.history import History
 from src.gui.dicts import Dicts
 from src.gui.about import About
+from src.gui.settings import Settings_
 from src.misc.worker import Worker
 from src.misc.completer import Completer
 
@@ -71,6 +72,9 @@ class MainWindow(QMainWindow, AllWindows):
         AboutAct = self.ui.actionAbout_redict
         AboutAct.triggered.connect(self.about)
 
+        SettingsAct = self.ui.actionSettings2
+        SettingsAct.triggered.connect(self.settings_)
+
         self.signal.startLoading.connect(self.loading)
         self.signal.stopLoading.connect(self.stop_loading)
 
@@ -103,13 +107,15 @@ class MainWindow(QMainWindow, AllWindows):
 
         QScroller.grabGesture(self.txtResult.viewport(), QScroller.LeftMouseButtonGesture)
 
-        self.clip = QApplication.clipboard()
-        self.clip.changed.connect(self.clipboard_changed)
+        clipboard_enabled = self.db.get_property(5)
+        if clipboard_enabled == 'True':
+            self.clip = QApplication.clipboard()
+            self.clip.changed.connect(self.clipboard_changed)
 
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.watch_clipboard)
-        self.timer.start(5000)
-
+            self.timer = QTimer()
+            self.timer.timeout.connect(self.watch_clipboard)
+            seconds = int(self.db.get_property(6))
+            self.timer.start(seconds*1000)
 
     def watch_clipboard(self):
         global clipboard_event
@@ -210,6 +216,9 @@ class MainWindow(QMainWindow, AllWindows):
 
     def about(self):
         About()
+
+    def settings_(self):
+        Settings_()
 
     def search_word(self, word = False):
         self.ui.txtResult.clear()

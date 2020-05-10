@@ -101,6 +101,8 @@
     <property name="title">
      <string>Redict</string>
     </property>
+    <addaction name="actionSettings2"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
@@ -223,6 +225,11 @@
     <font>
      <pointsize>14</pointsize>
     </font>
+   </property>
+  </action>
+  <action name="actionSettings2">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

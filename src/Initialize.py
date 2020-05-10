@@ -1,6 +1,3 @@
-#####
-#####Important: not yet ensured, that the lemmata json is in the cltk folder, gotta do that
-
 from pathlib import Path
 from os import listdir, makedirs
 from shutil import copy2
@@ -46,6 +43,7 @@ class init_database():
 
 
 def initialize():
+
     my_file = Path("_database/dictionaries_db.db")
     if not my_file.is_file():
         db = Database()
@@ -61,6 +59,8 @@ def initialize():
         db.create_property(2, '18', 'Fontsize')
         db.create_property(3, '1', 'Stylesheet')
         db.create_property(4, 'Lemmata', 'Completer: Lemmata or Declensions')
+        db.create_property(5, '1', 'Clipboard enabled')
+        db.create_property(6, '5', 'Clipboard Watcher Seconds')
 
         init.init_database()
 
