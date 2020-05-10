@@ -148,10 +148,6 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionQuit">
-   <property name="icon">
-    <iconset>
-     <normaloff>icons/tbQuit.png</normaloff>icons/tbQuit.png</iconset>
-   </property>
    <property name="text">
     <string>Quit</string>
    </property>
@@ -165,10 +161,6 @@
    </property>
   </action>
   <action name="actionAbout_redict">
-   <property name="icon">
-    <iconset>
-     <normaloff>icons/tbAbout.png</normaloff>icons/tbAbout.png</iconset>
-   </property>
    <property name="text">
     <string>About 'Redict'</string>
    </property>
@@ -179,10 +171,6 @@
    </property>
   </action>
   <action name="actionDictionaries">
-   <property name="icon">
-    <iconset>
-     <normaloff>icons/icon.png</normaloff>icons/icon.png</iconset>
-   </property>
    <property name="text">
     <string>Dicts</string>
    </property>
@@ -193,10 +181,6 @@
    </property>
   </action>
   <action name="actionZoom_In">
-   <property name="icon">
-    <iconset>
-     <normaloff>icons/tbZoomIn.png</normaloff>icons/tbZoomIn.png</iconset>
-   </property>
    <property name="text">
     <string>Zoom In</string>
    </property>
@@ -207,10 +191,6 @@
    </property>
   </action>
   <action name="actionZoom_Out">
-   <property name="icon">
-    <iconset>
-     <normaloff>icons/tbZoomOut.png</normaloff>icons/tbZoomOut.png</iconset>
-   </property>
    <property name="text">
     <string>Zoom Out</string>
    </property>
@@ -221,10 +201,6 @@
    </property>
   </action>
   <action name="actionManage_History">
-   <property name="icon">
-    <iconset>
-     <normaloff>icons/tbHistory.png</normaloff>icons/tbHistory.png</iconset>
-   </property>
    <property name="text">
     <string>Browse</string>
    </property>
@@ -240,10 +216,6 @@
    </property>
   </action>
   <action name="actionCompleter">
-   <property name="icon">
-    <iconset>
-     <normaloff>icons/tbCompleter.png</normaloff>icons/tbCompleter.png</iconset>
-   </property>
    <property name="text">
     <string>Completer</string>
    </property>

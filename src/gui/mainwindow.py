@@ -1,11 +1,10 @@
 import os
 from math import ceil
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from PyQt5 import uic, QtWidgets, QtGui
 from PyQt5.QtCore import Qt, QThreadPool, QEvent, QTimer
-from PyQt5.QtWidgets import QAction, qApp, QScroller, QCompleter
-from PyQt5.QtGui import QColor, QIcon
+from PyQt5.QtWidgets import QAction, qApp, QScroller, QCompleter, QMainWindow, QApplication, QMessageBox
+from PyQt5.QtGui import QColor, QTextCursor
 
 from src.database.database import Database
 from src.autocompleter.dwg import AutoComplete
@@ -28,9 +27,7 @@ class MainWindow(QMainWindow, AllWindows):
     def __init__(self):
         QMainWindow.__init__(self)
         AllWindows.__init__(self)
-
         self.init_ui()
-
 
     def init_ui(self):
         self.ui = uic.loadUi(os.path.abspath("_gui/main.ui"), self)
@@ -41,16 +38,13 @@ class MainWindow(QMainWindow, AllWindows):
 
         self.ui.btnGo.clicked.connect(self.search_word)
 
-
         #Read Font-Size from Settings and apply to Result
         self.font = QtGui.QFont()
         self.font.setPointSize(int(self.db.get_property(2)))
         self.ui.txtResult.setFont(self.font)
 
-
         #MenuBar
-        self.ui.menubar.setNativeMenuBar(False)
-
+        self.ui.menubar.setNativeMenuBar(True)
         self.txtSearch.textEdited.connect(self.txt_search_changed)
 
         exitAct = self.ui.actionQuit
@@ -90,15 +84,16 @@ class MainWindow(QMainWindow, AllWindows):
         self.completer.activated.connect(self.search_word)
         self.txtSearch.setCompleter(self.completer)
 
-
         self.ui.txtResult.setContextMenuPolicy(Qt.ActionsContextMenu)
 
-        lookup = QAction(QIcon('_gui/tbLookup.png'), "look-up", self)
+        lookup = QAction("look-up", self)
         lookup.triggered.connect(self.look_up)
         self.ui.txtResult.addAction(lookup)
 
         self.spinner = QtWaitingSpinner(self, True, True, Qt.ApplicationModal)
-        self.spinner.setColor(QColor(200, 200, 71))
+        self.spinner.setInnerRadius(100)
+        self.spinner.setNumberOfLines(50)
+        self.spinner.setColor(QColor(230, 126, 34))
 
         self.ui.txtSearch.setFocus()
 
@@ -133,21 +128,27 @@ class MainWindow(QMainWindow, AllWindows):
             clipboard_event = True
 
     def eventFilter(self, o, event):
-        #handle pinch event from txtResult
+        #handle gesture event from txtResult
         if event.type() == QEvent.Gesture:
             fontsize = int(self.db.get_property(2))
             g = event.gesture(Qt.PinchGesture)
             f = event.gesture(Qt.TapAndHoldGesture)
+            #handle pinch
             if g != None:
                 scale = g.scaleFactor()
                 fontsize = ceil(fontsize * scale)
                 self.zoom_fix(fontsize)
                 self.ui.update()
-            if f != None:
-                pass
+            #handle tap
+            elif f != None:
+                c = self.ui.txtResult.textCursor()
+                #TapAndHoldGesture is raised two; this if is made, because it didn't work
+                #for words with punctuation at the end without it.
+                if c.selectedText() == '':
+                    c.movePosition(QTextCursor.StartOfWord, QTextCursor.MoveAnchor)
+                    c.movePosition(QTextCursor.EndOfWord, QTextCursor.KeepAnchor)
+                    self.ui.txtResult.setTextCursor(c)
             return True
-        elif 0 == 0:
-            pass
         return False
 
     def loading(self):
