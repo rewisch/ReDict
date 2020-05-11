@@ -7,11 +7,11 @@ import src.misc.stylesheet as s
 from src.construction.Initialize import Initialize
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    app.setStyleSheet(s.load_stylesheet())
-
     init = Initialize()
     init.create_Database()
+
+    app = QtWidgets.QApplication(sys.argv)
+    app.setStyleSheet(s.load_stylesheet())
 
     sd = MainWindow()
     sd.show()

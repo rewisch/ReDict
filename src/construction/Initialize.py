@@ -52,7 +52,7 @@ class Initialize():
         copy2(abspath('../data/collected.json'), join(cltk_folder, 'latin/model/latin_models_cltk/lemmata/collatinus'))
 
         dict_folder = abspath('../data/dictionaries/')
-        dicts = listdir(dict_folder)
+        dicts = [dicts for dicts in listdir(dict_folder) if not dicts.startswith('.')]
 
         for dic in dicts:
             with zipfile.ZipFile(join(dict_folder, dic, 'dict.zip'), 'r') as zip_ref:

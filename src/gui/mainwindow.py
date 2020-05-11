@@ -44,7 +44,7 @@ class MainWindow(QMainWindow, AllWindows):
         self.ui.txtResult.setFont(self.font)
 
         #MenuBar
-        self.ui.menubar.setNativeMenuBar(True)
+        self.ui.menubar.setNativeMenuBar(False)
         self.txtSearch.textEdited.connect(self.txt_search_changed)
 
         exitAct = self.ui.actionQuit
