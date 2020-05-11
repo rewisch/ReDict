@@ -13,23 +13,25 @@ DATA_FILES = [
              '_gui/history.ui',
              '_gui/lookup.ui',
              '_gui/main.ui',
-             '_gui/icon.png',
-             '_gui/tbZoomOut.png',
-             '_gui/tbZoomIn.png',
-             '_gui/tbQuit.png',
-             '_gui/tbLookup.png',
-             '_gui/tbHistory.png',
-             '_gui/tbCompleter.png',
-             '_gui/tbAbout.png']
+             '_gui/icons/icon.png',
+             '_gui/settings.ui',
+            ]
      ),
-    ('_gui/stylesheets', ['_gui/stylesheets/AMOLED.qss']),
-    ('_database', ['_database/redict.db'])
+    ('_database', ['_database/redict.db']),
+    ('_gui/stylesheets', ['_gui/stylesheets/AMOLED.qss',
+                          '_gui/stylesheets/Aqua.qss',
+                          '_gui/stylesheets/ConsoleStyle.qss',
+                          '_gui/stylesheets/Dark.qss',
+                          '_gui/stylesheets/ManjaroMix.qss',
+                          '_gui/stylesheets/MaterialDark.qss',
+                          '_gui/stylesheets/Ubuntu.qss',
+                          ])
 ]
-OPTIONS = {'iconfile': '_gui/icon.icns'}
+OPTIONS = {'iconfile': '_gui/icons/icon.icns'}
 
 setup(
     name = 'Redict',
-    version = '0.0.1',
+    version = '0.0.2',
     author = 'Reto Wietlisbach',
     author_email = 'rwietlisbach@hotmail.com',
     app=APP,
