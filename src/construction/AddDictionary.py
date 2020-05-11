@@ -8,15 +8,13 @@ import src.misc.tools as tl
 from src.construction.PreparePerseusXML import perseus_xml_read
 
 class import_dictionary():
-
-
     def __init__(self):
         self.db = Database()
 
-    def check_dictionary(self, name, word_count):
+    def check_dictionary(self, name, word_count, abstractive=0):
         dict_exists = self.db.check_if_exists('Dictionary', 'Name', name)
         if dict_exists == False:
-            dictionary_id = self.db.write_dictionary(name, word_count)
+            dictionary_id = self.db.write_dictionary(name, word_count, abstractive)
             self.db._commit()
         else:
             dictionary_id = dict_exists[0][0]
@@ -32,19 +30,15 @@ class import_dictionary():
         return word_id
 
 
-
-
-
 class stardict(import_dictionary):
 
     def __init__(self, path, stardict_db_folder, stardict_db_name):
         import_dictionary.__init__(self)
-        #self.dicts_dir = os.path.join(os.path.dirname(__file__))
         self.dict1 = Dictionary(os.path.join(path, stardict_db_folder,stardict_db_name))
 
     def add_words_to_dictionary(self):
         try:
-            dictionary_id = self.check_dictionary(self.dict1.ifo.bookname, self.dict1.ifo.wordcount)
+            dictionary_id = self.check_dictionary(self.dict1.ifo.bookname, self.dict1.ifo.wordcount, abstractive=1 )
             print("\n'Add all new words to Dictionary '{0}':\n".format(self.dict1.ifo.bookname))
             for w in tqdm(self.dict1.idx._idx):
                 word = w.decode('Utf-8')

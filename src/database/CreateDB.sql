@@ -11,7 +11,7 @@ CREATE TABLE "Dictionary" (
 	"DictionaryId"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"Name"	TEXT NOT NULL,
 	"WordCount"	INTEGER NOT NULL,
-	"Abstractable"	INTEGER
+	"Abstractive"	INTEGER
 )
 
 GO

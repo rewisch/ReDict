@@ -131,6 +131,25 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tabSearch">
+      <attribute name="title">
+       <string>Search</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="abstractEnabled">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Show abstract of definition</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>

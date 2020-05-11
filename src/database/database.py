@@ -56,7 +56,7 @@ class Database():
                                 b.WordId, 
                                 b.Word, 
                                 c.Definition, 
-                                d.Abstractable
+                                d.Abstractive
                             from
                                 Flection as a 
                             inner join
@@ -77,8 +77,8 @@ class Database():
         return self.cursor.execute(sql).fetchall()
 
 
-    def write_dictionary(self, book_name, word_count):
-        sql = f"Insert Into Dictionary (Name, WordCount) Values ('{el_qt(book_name)}', {word_count}) "
+    def write_dictionary(self, book_name, word_count, abstractive=0):
+        sql = f"Insert Into Dictionary (Name, WordCount, Abstractive) Values ('{el_qt(book_name)}', {word_count}, {abstractive})"
         return self._execute(sql)
 
     def write_word(self, word):

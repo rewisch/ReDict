@@ -9,7 +9,7 @@ class Search(AllWindows):
         if len(data) != 0:
             for d in data:
                 wordid, word, definition, abstractive = d
-                if abstractive:
+                if abstractive and int(self.db.get_property(8)):
                     result = result + self.get_abstraction(definition) + '<br>'
                 result = result + definition.rstrip('<br />').replace('<br>', '') \
                          + '<br>---------------------------<br>'

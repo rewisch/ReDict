@@ -7,7 +7,6 @@ from PyQt5 import uic
 from src.gui.all_windows import AllWindows
 
 
-
 class Settings_(QDialog, AllWindows):
     def __init__(self):
         QDialog.__init__(self)
@@ -20,6 +19,7 @@ class Settings_(QDialog, AllWindows):
         self.load_clipboard()
         self.load_dictionaries()
         self.load_completer()
+        self.load_search()
         self.ui.show()
 
     def load_clipboard(self):
@@ -37,7 +37,6 @@ class Settings_(QDialog, AllWindows):
         ret = self.db.get_dictionaries()
         self.values = self.db.get_property(1)
         self.values = self.values.split(',')
-
         self.layout = QGridLayout()
         for r in ret:
             dictionary_id = r[0]
@@ -46,13 +45,16 @@ class Settings_(QDialog, AllWindows):
         self.tabWidget.widget(0).setLayout(self.layout)
 
     def load_completer(self):
-        self.prop = self.db.get_property(4)
-        if self.prop == self.ui.rbtnLemmata.text():
+        prop = self.db.get_property(4)
+        if prop == self.ui.rbtnLemmata.text():
             self.ui.rbtnLemmata.setChecked(True)
         else:
             self.ui.rbtnDeclinedWords.setChecked(True)
 
-
+    def load_search(self):
+        prop = int(self.db.get_property(8))
+        if prop:
+            self.ui.abstractEnabled.setChecked(True)
 
     def add_checkbox(self, id, name):
         b = QCheckBox(name, self, objectName='checkbox')
@@ -84,13 +86,12 @@ class Settings_(QDialog, AllWindows):
             return True
         elif self.clipboard_seconds_load != self.ui.txtSeconds.text():
             return True
-
         return False
 
     def closeEvent(self, event):
         self.save_completer()
         self.save_clipboard()
-
+        self.save_search()
         self.save_form_pers(self)
 
         if self.something_changed():
@@ -102,9 +103,7 @@ class Settings_(QDialog, AllWindows):
             new = self.ui.rbtnLemmata.text()
         else:
             new = self.ui.rbtnDeclinedWords.text()
-
-        if self.prop != new:
-            self.db.set_property(4, new)
+        self.db.set_property(4, new)
 
     def save_clipboard(self):
         if self.ui.clipboardEnable.isChecked():
@@ -115,4 +114,13 @@ class Settings_(QDialog, AllWindows):
         self.db.set_property(5, self.clipboard_enabled)
         self.db.set_property(6, self.ui.txtSeconds.text())
         self.db.set_property(7, self.ui.txtTimes.text())
+
+    def save_search(self):
+        if self.ui.abstractEnabled.isChecked():
+            abstract_enabled = '1'
+        else:
+            abstract_enabled = '0'
+        self.db.set_property(8, abstract_enabled)
+
+
 

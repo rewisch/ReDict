@@ -33,6 +33,7 @@ class Initialize():
             self.db.create_property(5, '1', 'Clipboard enabled')
             self.db.create_property(6, '5', 'Clipboard Watcher Seconds')
             self.db.create_property(7, '2', 'Clipboard Watcher x-Times')
+            self.db.create_property(8, '1', 'Show abstract of Dict-Entry')
 
             self._init_database()
 
