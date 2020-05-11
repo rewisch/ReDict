@@ -30,6 +30,8 @@ class MainWindow(QMainWindow, AllWindows):
 
     def init_ui(self):
         self.ui = uic.loadUi(os.path.abspath("_gui/main.ui"), self)
+        # flags = Qt.WindowFlags(Qt.FramelessWindowHint)
+        # self.setWindowFlags(flags)
         self.search = Search()
         self.load_form_pers(self)
         self.signal = MySignal()
@@ -115,14 +117,14 @@ class MainWindow(QMainWindow, AllWindows):
     def clipboard_changed(self):
         global clipboard_event
         clipboard_event += 1
-        if clipboard_event / 2 == int(self.db.get_property(7)):
+        setting = int(self.db.get_property(7))
+        if clipboard_event == setting:
             word = self.clip.text()
             cursor = self.txtResult.textCursor()
             sel = cursor.selectedText()
             if word != sel:
                 self.search_word(word)
             self.bring_to_front()
-
 
     def eventFilter(self, o, event):
         #handle gesture event from txtResult

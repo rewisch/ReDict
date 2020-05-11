@@ -6,20 +6,20 @@ from pathlib import Path
 
 from cltk.corpus.utils.importer import CorpusImporter
 
-from src.construction.AddDictionary import stardict, perseus
-from src.construction.WriteFlection import WriteFlectionWithDeclination
-from src.construction.WriteFlection import WriteFlectionWithoutDeclination
+from src.construction.add_dictionary import stardict, perseus
+from src.construction.writeflection import WriteFlectionWithDeclination
+from src.construction.writeflection import WriteFlectionWithoutDeclination
 from src.database.database import Database
 
 
 class Initialize():
 
     def create_Database(self):
-        my_file = Path("_database/dictionaries_db.db")
+        my_file = Path("_database/redict.db")
         if not my_file.is_file():
             self.db = Database()
 
-            file = open('database/CreateDB.sql', 'r')
+            file = open('database/createdb.sql', 'r')
             content = file.read()
             scripts = content.split('GO')
             for script in scripts:

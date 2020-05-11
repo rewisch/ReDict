@@ -7,7 +7,7 @@ Usage:
 
 from setuptools import setup
 
-APP = ['Redict.py']
+APP = ['ReDict.py']
 DATA_FILES = [
     ('_gui', ['_gui/about.ui',
              '_gui/history.ui',
@@ -23,7 +23,7 @@ DATA_FILES = [
              '_gui/tbAbout.png']
      ),
     ('_gui/stylesheets', ['_gui/stylesheets/AMOLED.qss']),
-    ('_database', ['_database/dictionaries_db.db'])
+    ('_database', ['_database/redict.db'])
 ]
 OPTIONS = {'iconfile': '_gui/icon.icns'}
 

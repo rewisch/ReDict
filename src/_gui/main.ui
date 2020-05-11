@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Redict</string>
+   <string>ReDict</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -99,7 +99,7 @@
      </font>
     </property>
     <property name="title">
-     <string>Redict</string>
+     <string>ReDict</string>
     </property>
     <addaction name="actionSettings2"/>
     <addaction name="separator"/>
