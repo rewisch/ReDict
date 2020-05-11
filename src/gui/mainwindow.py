@@ -123,7 +123,7 @@ class MainWindow(QMainWindow, AllWindows):
     def clipboard_changed(self):
         global clipboard_event
         clipboard_event += 1
-        if clipboard_event == int(self.db.get_property(7)):
+        if clipboard_event / 2 == int(self.db.get_property(7)):
             word = self.clip.text()
             cursor = self.txtResult.textCursor()
             sel = cursor.selectedText()
