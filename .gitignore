@@ -144,3 +144,5 @@ data/dictionaries/georges_lat-de/*.dict
 data/dictionaries/georges_lat-de/*.syn
 data/dictionaries/lewis_short/*.xml
 data/dictionaries/lewis_short/*.txt
+
+__MACOSX/
