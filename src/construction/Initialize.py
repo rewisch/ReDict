@@ -30,8 +30,9 @@ class Initialize():
             self.db.create_property(2, '18', 'Fontsize')
             self.db.create_property(3, '1', 'Stylesheet')
             self.db.create_property(4, 'Lemmata', 'Completer: Lemmata or Declensions')
-            self.db.create_property(5, 'True', 'Clipboard enabled')
+            self.db.create_property(5, '1', 'Clipboard enabled')
             self.db.create_property(6, '5', 'Clipboard Watcher Seconds')
+            self.db.create_property(7, '2', 'Clipboard Watcher x-Times')
 
             self._init_database()
 

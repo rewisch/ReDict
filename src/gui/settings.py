@@ -22,24 +22,34 @@ class Settings_(QDialog, AllWindows):
 
         self.clipboard_enabled_load = self.db.get_property(5)
         self.clipboard_seconds_load = self.db.get_property(6)
+        self.clipboard_times_load = self.db.get_property(7)
 
-        if self.clipboard_enabled_load == 'True':
+        if self.clipboard_enabled_load == '1':
             self.ui.clipboardEnable.setChecked(True)
         self.ui.txtSeconds.setText(self.clipboard_seconds_load)
+        self.ui.txtTimes.setText(self.clipboard_times_load)
+
+    def something_changed(self):
+        if self.clipboard_enabled_load != self.clipboard_enabled:
+            return True
+        elif self.clipboard_seconds_load != self.ui.txtSeconds.text():
+            return True
+
+        return False
 
     def closeEvent(self, event):
         if self.ui.clipboardEnable.isChecked():
-            self.clipboard_enabled = 'True'
+            self.clipboard_enabled = '1'
         else:
-            self.clipboard_enabled = 'False'
+            self.clipboard_enabled = '0'
 
         self.db.set_property(5, self.clipboard_enabled)
         self.db.set_property(6, self.ui.txtSeconds.text())
+        self.db.set_property(7, self.ui.txtTimes.text())
 
         self.save_form_pers(self)
 
-        if (self.clipboard_enabled_load != self.clipboard_enabled or
-            self.clipboard_seconds_load != self.ui.txtSeconds.text()):
+        if self.something_changed():
             qb = QMessageBox
             qb.warning(self, 'Message', 'Please restart the application.')
 

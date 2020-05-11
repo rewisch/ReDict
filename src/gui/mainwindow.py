@@ -22,7 +22,7 @@ from src.misc.completer import Completer
 
 subThread = True
 autocomplete = None
-clipboard_event = False
+clipboard_event = 0
 
 class MainWindow(QMainWindow, AllWindows):
     def __init__(self):
@@ -107,7 +107,7 @@ class MainWindow(QMainWindow, AllWindows):
         QScroller.grabGesture(self.txtResult.viewport(), QScroller.LeftMouseButtonGesture)
 
         clipboard_enabled = self.db.get_property(5)
-        if clipboard_enabled == 'True':
+        if clipboard_enabled == '1':
             self.clip = QApplication.clipboard()
             self.clip.changed.connect(self.clipboard_changed)
 
@@ -118,19 +118,19 @@ class MainWindow(QMainWindow, AllWindows):
 
     def watch_clipboard(self):
         global clipboard_event
-        clipboard_event = False
+        clipboard_event = 0
 
     def clipboard_changed(self):
         global clipboard_event
-        if clipboard_event:
+        clipboard_event += 1
+        if clipboard_event == int(self.db.get_property(7)):
             word = self.clip.text()
             cursor = self.txtResult.textCursor()
             sel = cursor.selectedText()
             if word != sel:
                 self.search_word(word)
             self.bring_to_front()
-        else:
-            clipboard_event = True
+
 
     def eventFilter(self, o, event):
         #handle gesture event from txtResult
