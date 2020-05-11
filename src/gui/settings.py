@@ -1,6 +1,8 @@
 import os
+from os import listdir
+from os.path import abspath
 
-from PyQt5.QtWidgets import QDialog, QMessageBox, QCheckBox, QGridLayout
+from PyQt5.QtWidgets import QDialog, QMessageBox, QCheckBox, QGridLayout, QRadioButton
 from PyQt5.QtGui import QFont
 from PyQt5 import uic
 
@@ -13,13 +15,15 @@ class Settings_(QDialog, AllWindows):
         self.load_form_pers(self)
         self.init_ui()
 
-
     def init_ui(self):
-        self.ui = uic.loadUi(os.path.abspath('_gui/settings.ui'), self)
+        self.ui = uic.loadUi(abspath('_gui/settings.ui'), self)
+        self.font = QFont()
+        self.font.setPointSize(14)
         self.load_clipboard()
         self.load_dictionaries()
         self.load_completer()
         self.load_search()
+        self.load_stylesheets()
         self.ui.show()
 
     def load_clipboard(self):
@@ -56,11 +60,30 @@ class Settings_(QDialog, AllWindows):
         if prop:
             self.ui.abstractEnabled.setChecked(True)
 
+    def load_stylesheets(self):
+        self.prop_style = self.db.get_property(3).split('.')[0]
+        self.style_now = self.prop_style
+        layout = QGridLayout()
+        styles = listdir(abspath('_gui/stylesheets/'))
+        for i, style in enumerate(styles):
+            name = style.split('.')[0]
+            radiobutton = QRadioButton(f"{name}")
+            radiobutton.setFont(self.font)
+            layout.addWidget(radiobutton)
+            if self.prop_style == name:
+                radiobutton.setChecked(True)
+            radiobutton.toggled.connect(self.switched_style)
+            self.ui.tabWidget.widget(4).setLayout(layout)
+
+    def switched_style(self, e):
+        sender = self.sender()
+        self.style_now = sender.text()
+        self.db.set_property(3, self.style_now + '.qss')
+
+
     def add_checkbox(self, id, name):
         b = QCheckBox(name, self, objectName='checkbox')
-        font = QFont()
-        font.setPointSize(14)
-        b.setFont(font)
+        b.setFont(self.font)
         if str(id) in self.values:
             b.setChecked(True)
         b.stateChanged.connect(self.handle_checkboxes)
@@ -86,6 +109,8 @@ class Settings_(QDialog, AllWindows):
             return True
         elif self.clipboard_seconds_load != self.ui.txtSeconds.text():
             return True
+        elif self.prop_style != self.style_now:
+            return True
         return False
 
     def closeEvent(self, event):
@@ -95,8 +120,7 @@ class Settings_(QDialog, AllWindows):
         self.save_form_pers(self)
 
         if self.something_changed():
-            qb = QMessageBox
-            qb.warning(self, 'Message', 'Please restart the application.')
+            self.restart()
 
     def save_completer(self):
         if self.ui.rbtnLemmata.isChecked():
@@ -104,6 +128,10 @@ class Settings_(QDialog, AllWindows):
         else:
             new = self.ui.rbtnDeclinedWords.text()
         self.db.set_property(4, new)
+
+    def restart(self):
+        qb = QMessageBox
+        qb.warning(self, 'Message', 'Please restart the application for the changes to take effect.')
 
     def save_clipboard(self):
         if self.ui.clipboardEnable.isChecked():
