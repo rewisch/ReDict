@@ -14,11 +14,9 @@ from src.gui.all_windows import AllWindows
 from src.misc.mysignal import MySignal
 from src.gui.lookup import LookupDialog
 from src.gui.history import History
-from src.gui.dicts import Dicts
 from src.gui.about import About
 from src.gui.settings import Settings_
 from src.misc.worker import Worker
-from src.misc.completer import Completer
 
 subThread = True
 autocomplete = None
@@ -51,9 +49,6 @@ class MainWindow(QMainWindow, AllWindows):
         exitAct.setShortcut('Ctrl+Q')
         exitAct.triggered.connect(self.exit)
 
-        exitAct = self.ui.actionCompleter
-        exitAct.triggered.connect(self.completer)
-
         zoominAct = self.ui.actionZoom_In
         zoominAct.setShortcut('Ctrl++')
         zoominAct.triggered.connect(self.zoom_in)
@@ -61,9 +56,6 @@ class MainWindow(QMainWindow, AllWindows):
         zoomoutAct = self.ui.actionZoom_Out
         zoomoutAct.setShortcut('Ctrl+-')
         zoomoutAct.triggered.connect(self.zoom_out)
-
-        DictionariesAct = self.ui.actionDictionaries
-        DictionariesAct.triggered.connect(self.dlg_dicts)
 
         HistoryAct = self.ui.actionManage_History
         HistoryAct.triggered.connect(self.history)
@@ -264,15 +256,9 @@ class MainWindow(QMainWindow, AllWindows):
         self.ui.txtResult.setFont(self.font)
         self.db.set_property(2, size)
 
-    def dlg_dicts(self):
-        self.dlgDict = Dicts()
-        self.dlgDict.show()
-
     def history(self):
         History(self.search_word)
 
-    def completer(self):
-        Completer()
     def closeEvent(self, event):
         global subThread
         subThread = False

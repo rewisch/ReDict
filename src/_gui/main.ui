@@ -105,13 +105,6 @@
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menuSettings">
-    <property name="title">
-     <string>Settings</string>
-    </property>
-    <addaction name="actionDictionaries"/>
-    <addaction name="actionCompleter"/>
-   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="font">
      <font>
@@ -145,7 +138,6 @@
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuRecent"/>
-   <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

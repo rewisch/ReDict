@@ -10,8 +10,6 @@ from setuptools import setup
 APP = ['Redict.py']
 DATA_FILES = [
     ('_gui', ['_gui/about.ui',
-             '_gui/completer.ui',
-             '_gui/dicts.ui',
              '_gui/history.ui',
              '_gui/lookup.ui',
              '_gui/main.ui',
