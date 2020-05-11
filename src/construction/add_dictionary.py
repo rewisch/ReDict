@@ -5,7 +5,7 @@ from pystardict import Dictionary
 
 from src.database.database import Database
 import src.misc.tools as tl
-from src.construction.PreparePerseusXML import perseus_xml_read
+from src.construction.prepareperseusxml import perseus_xml_read
 
 class import_dictionary():
     def __init__(self):
