@@ -33,7 +33,6 @@ class MainWindow(QMainWindow, AllWindows):
     def init_ui(self):
         self.ui = uic.loadUi(os.path.abspath("_gui/main.ui"), self)
         self.search = Search()
-        self.SetComp = True
         self.load_form_pers(self)
         self.signal = MySignal()
 
@@ -115,7 +114,7 @@ class MainWindow(QMainWindow, AllWindows):
             self.timer = QTimer()
             self.timer.timeout.connect(self.watch_clipboard)
             seconds = int(self.db.get_property(6))
-            self.timer.start(seconds*1000)
+            self.timer.start(seconds * 1000)
 
     def watch_clipboard(self):
         global clipboard_event
@@ -179,6 +178,7 @@ class MainWindow(QMainWindow, AllWindows):
 
     def initialize_things(self):
         self.signal.startLoading.emit()
+
         db = Database()
         prop = db.get_property(4)
         global autocomplete

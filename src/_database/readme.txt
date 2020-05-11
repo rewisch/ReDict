@@ -1,2 +1,2 @@
-in this folder lies the database file. the file is too big the be stored on github but soon
-there will be a procedure to initialize the data. be patient. 
+this folder contains the database-file which will be automatically installed if you run ReDict. 
+Please install all the site-packages from the requirements file.
