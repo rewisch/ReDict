@@ -20,7 +20,9 @@ Main Features:
 You can download a running distribution of the software here:
 
 Mac: https://1drv.ms/u/s!AktcSmDEUbTzgah8UcQubAPhJaZTrQ?e=rnD3oY
+
 Windows: tbd
+
 Linux: tbd
 
 # Technical
