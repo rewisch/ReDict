@@ -1,3 +1,12 @@
+# Content
+  ##   ReDict - A Lation Dictionary
+  ##   Downloads
+  ##   Technical 
+  ##   Additional dictionaries
+
+
+
+
 # ReDict - A Latin Dictionary 
 
 There’s no shortage of available Latin dictionaries both off- and online. I came up with this additional dictionary because the existing dictionaries – at least the once I'm aware of – lacked some features I’d like to have. Besides, it was a fun project to write in Python and to explore its main concepts and features. It's my first real "progamming project", so please pardon if things might not be done as they should. Feel free to correct though, I'd be more than happy. 
@@ -15,6 +24,17 @@ Main Features:
 
 5. From the result you can select a word, tap or right-click in order to open the context-menu and then look the word up in an additional window. 
 
+6. Choose different stylesheets
+
+Ubuntu:
+![Ubuntu](https://image.jimcdn.com/app/cms/image/transf/none/path/s042449d1eb1325c4/image/i770fed9960ec8898/version/1589308383/image.png)
+
+Dark: 
+![Dark](https://image.jimcdn.com/app/cms/image/transf/none/path/s042449d1eb1325c4/image/i5eebb3521a9f9cd9/version/1589308553/image.png)
+
+Amoled:
+![Ubuntu](https://image.jimcdn.com/app/cms/image/transf/none/path/s042449d1eb1325c4/image/i88396d3f35edb278/version/1589308566/image.png)
+
 # Downloads
 
 You can download an executable distribution of the software here:
@@ -29,6 +49,6 @@ Linux (64bit): https://1drv.ms/u/s!AktcSmDEUbTzgah-bqlOQHs9Wb2xNg?e=Rrxinw
 
 Run Redict.py in the src folder. It should, if the database does not yet exist, create the database and import the dictionaries. 
 
-# Additional dictionary
+# Additional dictionaries
 
 If you have additional machine-readable dictionaries please send them to me. I'm more than happy to add as many dictionaries as possible. 
