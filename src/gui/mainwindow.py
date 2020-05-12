@@ -103,6 +103,10 @@ class MainWindow(QMainWindow, AllWindows):
         clipboard_enabled = self.db.get_property(5)
         if clipboard_enabled == '1':
             self.clip = QApplication.clipboard()
+            #on Mac unfortunately this event will only be fired when the application
+            #is active, i.e. not in background. On Windows it works fine. It might
+            #have to come back to a timer with an endless for loop which checks with
+            #paste whether something has changed. But how then to count Ctrl-C presses?
             self.clip.changed.connect(self.clipboard_changed)
 
             self.timer = QTimer()
