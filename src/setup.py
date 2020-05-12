@@ -5,7 +5,7 @@ Usage:
     python setup.py py2app
 """
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 APP = ['ReDict.py']
 DATA_FILES = [
@@ -37,5 +37,7 @@ setup(
     app=APP,
     data_files=DATA_FILES,
     options={'py2app': OPTIONS},
-    setup_requires=['py2app', 'setuptools', 'PyQt5', 'pyperclip', 'bs4']
+    packages=find_packages(),
+    setup_requires=['py2app', 'setuptools', 'PyQt5', 'bs4', 'cltk',
+                    'lxml', 'Python-Levenshtein', 'PyStarDict', 'tqdm']
 )
