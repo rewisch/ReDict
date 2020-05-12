@@ -15,6 +15,14 @@ Main Features:
 
 5. From the result you can select a word, tap or right-click in order to open the context-menu and then look the word up in an additional window. 
 
+# Downloads
+
+You can download a running distribution of the software here:
+
+Mac: https://1drv.ms/u/s!AktcSmDEUbTzgah8UcQubAPhJaZTrQ?e=rnD3oY
+Windows: tbd
+Linux: tbd
+
 # Technical
 
 Run Redict.py in the src folder. It should, if the database does not yet exist, create the database and import the dictionaries. 
