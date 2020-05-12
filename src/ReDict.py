@@ -9,7 +9,7 @@ try:
     init = Initialize()
     init.create_Database()
 except:
-    print('Failed tom import Initialize. The database will not be created')
+    print('Failed to import Initialize. The database can not be created')
 
 
 if __name__ == "__main__":
