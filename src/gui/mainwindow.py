@@ -17,6 +17,7 @@ from src.gui.history import History
 from src.gui.about import About
 from src.gui.settings import Settings_
 from src.misc.worker import Worker
+from src.misc.tools import clpboard_cleanse
 
 subThread = True
 autocomplete = None
@@ -123,7 +124,7 @@ class MainWindow(QMainWindow, AllWindows):
         clipboard_event += 1
         setting = int(self.db.get_property(7))
         if clipboard_event == setting:
-            word = self.clip.text()
+            word = clpboard_cleanse(self.clip.text())
             cursor = self.txtResult.textCursor()
             sel = cursor.selectedText()
             if word != sel:
