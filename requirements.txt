@@ -7,3 +7,4 @@ PyStarDict==0.8
 lxml==4.5.0
 setuptools==46.2.0
 wheel==0.34.2
+PyInstaller==3.6

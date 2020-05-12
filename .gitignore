@@ -146,3 +146,5 @@ data/dictionaries/lewis_short/*.xml
 data/dictionaries/lewis_short/*.txt
 
 __MACOSX/
+
+*.bat
