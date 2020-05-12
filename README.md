@@ -17,7 +17,7 @@ Main Features:
 
 # Downloads
 
-You can download a executable distribution of the software here:
+You can download an executable distribution of the software here:
 
 Mac: https://1drv.ms/u/s!AktcSmDEUbTzgah8UcQubAPhJaZTrQ?e=rnD3oY
 
