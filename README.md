@@ -21,9 +21,9 @@ You can download a running distribution of the software here:
 
 Mac: https://1drv.ms/u/s!AktcSmDEUbTzgah8UcQubAPhJaZTrQ?e=rnD3oY
 
-Windows: tbd
+Windows: https://1drv.ms/u/s!AktcSmDEUbTzgah96241x5zNHUbfhw?e=chATxH
 
-Linux: tbd
+Linux (64bit): https://1drv.ms/u/s!AktcSmDEUbTzgah-bqlOQHs9Wb2xNg?e=Rrxinw
 
 # Technical
 
