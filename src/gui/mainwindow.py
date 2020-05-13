@@ -2,7 +2,7 @@ import os
 from math import ceil
 
 from PyQt5 import uic, QtWidgets, QtGui
-from PyQt5.QtCore import Qt, QThreadPool, QEvent, QTimer
+from PyQt5.QtCore import Qt, QThreadPool, QEvent, QTimer, QStringListModel
 from PyQt5.QtWidgets import QAction, qApp, QScroller, QCompleter, QMainWindow, QApplication, QMessageBox
 from PyQt5.QtGui import QColor, QTextCursor
 
@@ -18,6 +18,7 @@ from src.gui.about import About
 from src.gui.settings import Settings_
 from src.misc.worker import Worker
 from src.misc.tools import clpboard_cleanse
+from src.misc.completerdelegate import CompleterDelegate
 
 subThread = True
 autocomplete = None
@@ -80,6 +81,11 @@ class MainWindow(QMainWindow, AllWindows):
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
         self.completer.setCompletionMode(QCompleter.PopupCompletion)
         self.completer.activated.connect(self.search_word)
+        model = QStringListModel()
+        self.completer.setModel(model)
+        delegate = CompleterDelegate(self.ui.txtSearch)
+        self.completer.popup().setItemDelegate(delegate)
+        self.completer.popup().setFont(self.font)
         self.txtSearch.setCompleter(self.completer)
 
         self.ui.txtResult.setContextMenuPolicy(Qt.ActionsContextMenu)
@@ -89,7 +95,7 @@ class MainWindow(QMainWindow, AllWindows):
         self.ui.txtResult.addAction(lookup)
 
         self.spinner = QtWaitingSpinner(self, True, True, Qt.ApplicationModal)
-        self.spinner.setInnerRadius(100)
+        self.spinner.setInnerRadius(150)
         self.spinner.setNumberOfLines(50)
         self.spinner.setColor(QColor(230, 126, 34))
 
@@ -146,8 +152,6 @@ class MainWindow(QMainWindow, AllWindows):
             #handle tap
             elif f != None:
                 c = self.ui.txtResult.textCursor()
-                #TapAndHoldGesture is raised two; this if is made, because it didn't work
-                #for words with punctuation at the end without it.
                 if c.selectedText() == '':
                     c.movePosition(QTextCursor.StartOfWord, QTextCursor.MoveAnchor)
                     c.movePosition(QTextCursor.EndOfWord, QTextCursor.KeepAnchor)
@@ -157,9 +161,10 @@ class MainWindow(QMainWindow, AllWindows):
 
     def loading(self):
         self.spinner.start()
+
     def stop_loading(self):
         self.spinner.stop()
-        self.txtSearch.setPlaceholderText("Enter the word you want to look-up")
+        self.txtSearch.setPlaceholderText("Enter word...")
         self.txtSearch.setFocus()
 
     def txt_search_changed(self, changeValue):
@@ -183,9 +188,9 @@ class MainWindow(QMainWindow, AllWindows):
         global autocomplete
 
         if prop == 'Lemmata':
-            cmwords = db.read_database('Select distinct Word  From Word')
+            cmwords = db.read_database('SELECT DISTINCT Word FROM Word')
         else:
-            cmwords = db.read_database('Select Flection From Flection')
+            cmwords = db.read_database('SELECT Flection FROM Flection')
 
         words = dict()
         for r in cmwords:
@@ -195,12 +200,12 @@ class MainWindow(QMainWindow, AllWindows):
         self.signal.stopLoading.emit()
 
     def bring_to_front(self):
-            """ Brings the terminal window to the front and places the cursor in the textbox """
-            self.txtSearch.setFocus()
-            self.setWindowState(self.windowState() & ~Qt.WindowMinimized | Qt.WindowActive)
-            self.raise_()
-            self.activateWindow()
-            self.show()
+        """ Brings the window to the front and places the cursor in the textbox """
+        self.txtSearch.setFocus()
+        self.setWindowState(self.windowState() & ~Qt.WindowMinimized | Qt.WindowActive)
+        self.raise_()
+        self.activateWindow()
+        self.show()
 
     def keyPressEvent(self, qKeyEvent):
         if qKeyEvent.key() == Qt.Key_Return:
@@ -219,7 +224,7 @@ class MainWindow(QMainWindow, AllWindows):
     def settings_(self):
         Settings_()
 
-    def search_word(self, word = False):
+    def search_word(self, word=False):
         self.ui.txtResult.clear()
         if not word:
             wrd = self.ui.txtSearch.text().lower()
@@ -228,6 +233,7 @@ class MainWindow(QMainWindow, AllWindows):
             self.ui.txtSearch.setText(word.lower())
             result = self.search.search_word(word, self.ui.ckboxLike.checkState())
         self.set_result(result)
+        self.ui.txtSearch.selectAll()
 
     def set_result(self, result):
         self.ui.txtResult.append(result)
@@ -256,7 +262,6 @@ class MainWindow(QMainWindow, AllWindows):
         self.font.setPointSize(size)
         self.ui.txtResult.setFont(self.font)
         self.db.set_property(2, size)
-
 
     def zoom_fix(self, size):
         self.font.setPointSize(size)
