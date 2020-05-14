@@ -9,11 +9,11 @@ class Database():
         self.cursor = self.db_connection.cursor()
 
     def truncate_database(self):
-        sql = ["delete From Dictionary",
-              "delete From Word",
-              "delete From Definition",
-              "delete From Flection",
-              "update sqlite_sequence  set seq = 0 where name in ('Flection', 'Definition', 'Word', 'Dictionary')"
+        sql = ["DELETE FROM Dictionary",
+              "DELETE FROM Word",
+              "DELETE FROM Definition",
+              "DELETE FROM Flection",
+              "UPDATE sqlite_sequence  SET seq = 0 WHERE name IN ('Flection', 'Definition', 'Word', 'Dictionary')"
                ]
 
         for s in sql:
@@ -21,20 +21,20 @@ class Database():
         self._commit()
 
     def get_dictionaries(self):
-        sql = 'select DictionaryId, Name From Dictionary'
+        sql = 'SELECT DictionaryId, Name FROM Dictionary'
         return self.cursor.execute(sql).fetchall()
 
     def get_property(self, property_id):
-        sql = f'select Value From Property where PropertyId = {property_id}'
+        sql = f'SELECT Value FROM Property WHERE PropertyId = {property_id}'
         return self.cursor.execute(sql).fetchone()[0]
 
     def set_property(self, property_id, value):
-        sql = f"Update Property Set Value = '{value}'  where PropertyId = {property_id}"
+        sql = f"UPDATE Property SET Value = '{value}'  WHERE PropertyId = {property_id}"
         self._execute(sql)
         self._commit()
 
     def create_property(self, property_id, value, description):
-        sql = f"Insert Into Property (PropertyId, Value, Description) Values ({property_id}, '{value}', '{description}')"
+        sql = f"INSERT INTO Property (PropertyId, Value, Description) VALUES ({property_id}, '{value}', '{description}')"
         self._execute(sql)
         self._commit()
 
@@ -52,67 +52,69 @@ class Database():
         if dbs == '[]':
             return None
 
-        sql = (f"""select distinct 
+        sql = (f"""SELECT DISTINCT 
                                 b.WordId, 
                                 b.Word, 
                                 c.Definition, 
                                 d.Abstractive
-                            from
-                                Flection as a 
-                            inner join
-                                Word as b on a.WordId = b.WordId
-                            inner join
-                                Definition as c on a.WordId = c.WordId
-                            inner join 
-                                Dictionary as d on c.DictionaryId = d.DictionaryId
-                           where
-                                c.DictionaryId in ({dbs}) and """
+                            FROM
+                                Flection AS a 
+                            INNER JOIN
+                                Word AS b ON a.WordId = b.WordId
+                            INNER JOIN
+                                Definition AS c ON a.WordId = c.WordId
+                            INNER JOIN 
+                                Dictionary AS d ON c.DictionaryId = d.DictionaryId
+                           WHERE
+                                c.DictionaryId IN ({dbs}) AND """
                )
 
         if not search_like:
             sql = sql + f"Flection = '{el_qt(word)}'"
         else:
-            sql = sql + f"Flection like '%{el_qt(word)}%'"
+            sql = sql + f"Flection LIKE '%{el_qt(word)}%'"
 
         return self.cursor.execute(sql).fetchall()
 
 
     def write_dictionary(self, book_name, word_count, abstractive=0):
-        sql = f"Insert Into Dictionary (Name, WordCount, Abstractive) Values ('{el_qt(book_name)}', {word_count}, {abstractive})"
+        sql = f"INSERT INTO Dictionary (Name, WordCount, Abstractive) VALUES ('{el_qt(book_name)}', {word_count}, {abstractive})"
         return self._execute(sql)
 
     def write_word(self, word):
-        sql = f"Insert Into Word (Word) Values ('{el_qt(word)}')"
+        sql = f"INSERT INTO Word (Word) VALUES ('{el_qt(word)}')"
         return self._execute(sql)
 
     def write_definition(self, dictionary_id, word_id, definition):
-        sql = f"Insert Into Definition (DictionaryId, WordId, Definition) Values ({dictionary_id}, {word_id}, '{el_qt(definition)}')"
+        sql = f"INSERT INTO Definition (DictionaryId, WordId, Definition) VALUES ({dictionary_id}, {word_id}, '{el_qt(definition)}')"
         return self._execute(sql)
 
     def write_flection(self, word_id, form, description, is_flection = 0):
-        sql = f"Insert Into Flection (WordId, Flection, Description, NoFlection) Values ({word_id}, '{el_qt(form)}', '{el_qt(description)}', {is_flection})"
+        sql = f"INSERT INTO Flection (WordId, Flection, Description, NoFlection) VALUES ({word_id}, '{el_qt(form)}', '{el_qt(description)}', {is_flection})"
         return self._execute(sql)
 
     def write_history(self, word_id):
-        sql = f"Insert Into History (WordId) Values ({word_id})"
+        sql = f"DELETE History WHERE WordId = {word_id}"
+        self._execute(sql)
+        sql = f"INSERT INTO History (WordId) VALUES ({word_id})"
         self._execute(sql)
         self._commit()
 
     def get_history(self):
-        sql = """select 
+        sql = """SELECT 
 	                b.Word
-                from 
-	                History as a 
-                inner join 
-	                Word as b on a.WordId = b.WordId
-                order by 
-	                HistoryId desc
+                FROM 
+	                History AS a 
+                INNER JOIN
+	                Word AS b ON a.WordId = b.WordId
+                ORDER BY 
+	                HistoryId DESC
         """
         data = self.cursor.execute(sql).fetchall()
         return data
 
     def clear_history(self):
-        sql = 'delete From History'
+        sql = 'DELETE FROM History'
         self.cursor.execute(sql)
         self._commit()
 

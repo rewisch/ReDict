@@ -5,6 +5,6 @@ from PyQt5.QtCore import Qt
 class CompleterDelegate(QStyledItemDelegate):
     def initStyleOption(self, option, index):
         super(CompleterDelegate, self).initStyleOption(option, index)
-        option.backgroundBrush = QColor("gray")
+        option.backgroundBrush = QColor("white")
         option.palette.setBrush(QPalette.Text, QColor('black'))
         option.displayAlignment = Qt.AlignLeft
