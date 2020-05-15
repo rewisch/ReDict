@@ -24,8 +24,30 @@ subThread = True
 autocomplete = None
 clipboard_event = 0
 
+
 class MainWindow(QMainWindow, AllWindows):
     def __init__(self):
+        """
+        The .ui File has the following objects:
+        MainWindow --> QMainWindow
+            centralwidget --> QWidget
+                txtSearch --> QLineEdit
+                txtResult --> QTextEdit
+                chkLike --> QCheckBox
+                btnSearch --> QPushButton
+            menubar --> QMenuBar
+                menuReDict --> QMenu
+                    actionSettings --> QAction
+                    actionQuit --> QAction
+                menuView --> QMenu
+                    actionZoomIn --> QAction
+                    actionZoomOut --> QAction
+                menuHistory --> QMenu
+                    actionHistory --> QAction
+                menuHelp --> QMenu
+                    actionAbout --> QAction
+            statusbar --> QStatusBar
+        """
         super(QMainWindow, self).__init__()
         super(AllWindows, self).__init__()
         self.init_ui()
@@ -36,14 +58,14 @@ class MainWindow(QMainWindow, AllWindows):
         self.load_form_pers(self)
         self.signal = MySignal()
 
-        self.ui.btnGo.clicked.connect(self.search_word)
+        self.ui.btnSearch.clicked.connect(self.search_word)
 
-        #Read Font-Size from Settings and apply to Result
+        # Read Font-Size from Settings and apply to Result
         self.font = QtGui.QFont()
         self.font.setPointSize(int(self.db.get_property(2)))
         self.ui.txtResult.setFont(self.font)
 
-        #MenuBar
+        # MenuBar
         self.ui.menubar.setNativeMenuBar(False)
         self.txtSearch.textEdited.connect(self.txt_search_changed)
 
@@ -51,21 +73,21 @@ class MainWindow(QMainWindow, AllWindows):
         exitAct.setShortcut('Ctrl+Q')
         exitAct.triggered.connect(self.exit)
 
-        zoominAct = self.ui.actionZoom_In
+        zoominAct = self.ui.actionZoomIn
         zoominAct.setShortcut('Ctrl++')
         zoominAct.triggered.connect(self.zoom_in)
 
-        zoomoutAct = self.ui.actionZoom_Out
+        zoomoutAct = self.ui.actionZoomOut
         zoomoutAct.setShortcut('Ctrl+-')
         zoomoutAct.triggered.connect(self.zoom_out)
 
-        HistoryAct = self.ui.actionManage_History
+        HistoryAct = self.ui.actionHistory
         HistoryAct.triggered.connect(self.history)
 
-        AboutAct = self.ui.actionAbout_redict
+        AboutAct = self.ui.actionAbout
         AboutAct.triggered.connect(self.about)
 
-        SettingsAct = self.ui.actionSettings2
+        SettingsAct = self.ui.actionSettings
         SettingsAct.triggered.connect(self.settings_)
 
         self.signal.startLoading.connect(self.loading)
@@ -108,10 +130,10 @@ class MainWindow(QMainWindow, AllWindows):
         clipboard_enabled = self.db.get_property(5)
         if clipboard_enabled == '1':
             self.clip = QApplication.clipboard()
-            #on Mac unfortunately this event will only be fired when the application
-            #is active, i.e. not in background. On Windows it works fine. It might
-            #have to come back to a timer with an endless for loop which checks with
-            #paste whether something has changed. But how then to count Ctrl-C presses?
+            # on Mac unfortunately this event will only be fired when the application
+            # is active, i.e. not in background. On Windows it works fine. It might
+            # have to come back to a timer with an endless for loop which checks with
+            # paste whether something has changed. But how then to count Ctrl-C presses?
             self.clip.changed.connect(self.clipboard_changed)
 
             self.timer = QTimer()
@@ -136,18 +158,18 @@ class MainWindow(QMainWindow, AllWindows):
             self.bring_to_front()
 
     def eventFilter(self, o, event):
-        #handle gesture event from txtResult
+        # handle gesture event from txtResult
         if event.type() == QEvent.Gesture:
             fontsize = int(self.db.get_property(2))
             g = event.gesture(Qt.PinchGesture)
             f = event.gesture(Qt.TapAndHoldGesture)
-            #handle pinch
+            # handle pinch
             if g != None:
                 scale = g.scaleFactor()
                 fontsize = ceil(fontsize * scale)
                 self.zoom_fix(fontsize)
                 self.ui.update()
-            #handle tap
+            # handle tap
             elif f != None:
                 c = self.ui.txtResult.textCursor()
                 if c.selectedText() == '':
@@ -224,10 +246,10 @@ class MainWindow(QMainWindow, AllWindows):
         self.ui.txtResult.clear()
         if not word:
             wrd = self.ui.txtSearch.text().lower()
-            result = self.search.search_word(wrd, self.ui.ckboxLike.checkState())
+            result = self.search.search_word(wrd, self.ui.chkLike.checkState())
         else:
             self.ui.txtSearch.setText(word.lower())
-            result = self.search.search_word(word, self.ui.ckboxLike.checkState())
+            result = self.search.search_word(word, self.ui.chkLike.checkState())
         self.set_result(result)
         self.ui.txtSearch.selectAll()
 
@@ -239,7 +261,7 @@ class MainWindow(QMainWindow, AllWindows):
         cursor = self.txtResult.textCursor()
         LookupDialog(cursor.selectedText()).search_word()
 
-    def set_result(self, result):
+    def set_result(self, result: object):
         self.ui.txtResult.append(result)
         self.ui.txtResult.moveCursor(QtGui.QTextCursor.Start)
 
@@ -255,10 +277,11 @@ class MainWindow(QMainWindow, AllWindows):
         self.ui.txtResult.setFont(self.font)
         self.db.set_property(2, size)
 
-    def zoom_fix(self, size):
+    def zoom_fix(self, size: int) -> None:
         self.font.setPointSize(size)
         self.ui.txtResult.setFont(self.font)
         self.db.set_property(2, size)
+        return None
 
     def history(self):
         History(self.search_word)

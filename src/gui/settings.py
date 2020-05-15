@@ -118,7 +118,7 @@ class Settings_(QDialog, AllWindows):
         self.save_search()
         if self.something_changed():
             self.restart()
-        super(AllWindows, self).closeEvent()
+        AllWindows.closeEvent(self, Settings_)
 
     def save_completer(self):
         if self.ui.rbtnLemmata.isChecked():

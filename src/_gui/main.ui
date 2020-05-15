@@ -20,7 +20,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="1">
-     <widget class="QPushButton" name="btnGo">
+     <widget class="QPushButton" name="btnSearch">
       <property name="font">
        <font>
         <pointsize>20</pointsize>
@@ -65,7 +65,7 @@
      </widget>
     </item>
     <item row="0" column="2">
-     <widget class="QCheckBox" name="ckboxLike">
+     <widget class="QCheckBox" name="chkLike">
       <property name="font">
        <font>
         <pointsize>20</pointsize>
@@ -84,7 +84,7 @@
      <x>0</x>
      <y>0</y>
      <width>923</width>
-     <height>34</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="font">
@@ -92,7 +92,7 @@
      <pointsize>16</pointsize>
     </font>
    </property>
-   <widget class="QMenu" name="menuFile">
+   <widget class="QMenu" name="menuReDict">
     <property name="font">
      <font>
       <pointsize>16</pointsize>
@@ -101,7 +101,7 @@
     <property name="title">
      <string>ReDict</string>
     </property>
-    <addaction name="actionSettings2"/>
+    <addaction name="actionSettings"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -114,13 +114,13 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionAbout_redict"/>
+    <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menuRecent">
+   <widget class="QMenu" name="menuHistory">
     <property name="title">
      <string>History</string>
     </property>
-    <addaction name="actionManage_History"/>
+    <addaction name="actionHistory"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -132,12 +132,12 @@
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actionZoom_In"/>
-    <addaction name="actionZoom_Out"/>
+    <addaction name="actionZoomIn"/>
+    <addaction name="actionZoomOut"/>
    </widget>
-   <addaction name="menuFile"/>
+   <addaction name="menuReDict"/>
    <addaction name="menuView"/>
-   <addaction name="menuRecent"/>
+   <addaction name="menuHistory"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -154,7 +154,7 @@
     </font>
    </property>
   </action>
-  <action name="actionAbout_redict">
+  <action name="actionAbout">
    <property name="text">
     <string>About 'Redict'</string>
    </property>
@@ -174,7 +174,7 @@
     </font>
    </property>
   </action>
-  <action name="actionZoom_In">
+  <action name="actionZoomIn">
    <property name="text">
     <string>Zoom In</string>
    </property>
@@ -184,7 +184,7 @@
     </font>
    </property>
   </action>
-  <action name="actionZoom_Out">
+  <action name="actionZoomOut">
    <property name="text">
     <string>Zoom Out</string>
    </property>
@@ -194,7 +194,7 @@
     </font>
    </property>
   </action>
-  <action name="actionManage_History">
+  <action name="actionHistory">
    <property name="text">
     <string>Browse</string>
    </property>
@@ -202,11 +202,6 @@
     <font>
      <pointsize>14</pointsize>
     </font>
-   </property>
-  </action>
-  <action name="actionSettings">
-   <property name="text">
-    <string>Settings</string>
    </property>
   </action>
   <action name="actionCompleter">
@@ -219,7 +214,7 @@
     </font>
    </property>
   </action>
-  <action name="actionSettings2">
+  <action name="actionSettings">
    <property name="text">
     <string>Settings</string>
    </property>
