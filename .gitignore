@@ -132,5 +132,19 @@ dmypy.json
 .DS_Store
 
 .idea/inspectionProfiles/profiles_settings.xml
-
 .idea/
+
+data/dictionaries/georges_de-lat/*.idx
+data/dictionaries/georges_de-lat/*.ifo
+data/dictionaries/georges_de-lat/*.dict
+data/dictionaries/georges_de-lat/*.syn
+data/dictionaries/georges_lat-de/*.idx
+data/dictionaries/georges_lat-de/*.ifo
+data/dictionaries/georges_lat-de/*.dict
+data/dictionaries/georges_lat-de/*.syn
+data/dictionaries/lewis_short/*.xml
+data/dictionaries/lewis_short/*.txt
+
+__MACOSX/
+
+*.bat
