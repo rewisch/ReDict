@@ -14,7 +14,7 @@ Installation on my Windows
 
 Installation for Linux (on Windows with WSL
 
-reto@CRE-NB-25:/mnt/c/Workspace/ReDict/dist_linux$ pyinstaller -w -F --onefile --hidden-import pkg_resources.py2_warn ../src/ReDict.py
+reto@CRE-NB-25:/mnt/c/Workspace/ReDict/dist_linux$ pyinstaller -w -F --onefile --icon=../src/_gui/icons/icon.ico --hidden-import pkg_resources.py2_warn ../src/ReDict.py
 """
 
 from setuptools import setup, find_packages
