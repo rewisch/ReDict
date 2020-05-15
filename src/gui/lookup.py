@@ -12,10 +12,9 @@ class LookupDialog(QDialog, AllWindows):
     def __init__(self, word):
         QDialog.__init__(self)
         AllWindows.__init__(self)
-        self.init_ui()
+        self.word = word
         self.search = Search()
-        self.search_word(word)
-        self.load_form_pers(self)
+        self.init_ui()
 
     def init_ui(self):
         self.ui = uic.loadUi(os.path.abspath("_gui/lookup.ui"), self)
@@ -26,9 +25,9 @@ class LookupDialog(QDialog, AllWindows):
         QScroller.grabGesture(self.txtResultLookup.viewport(), QScroller.LeftMouseButtonGesture)
         self.show()
 
-    def search_word(self, word):
+    def search_word(self):
         self.ui.txtResultLookup.clear()
-        wrd = word.lower()
+        wrd = self.word.lower()
         result = self.search.search_word(wrd, False)
         self.set_result(result)
 
@@ -44,8 +43,8 @@ class LookupDialog(QDialog, AllWindows):
 
     def look_up(self):
         cursor = self.txtResultLookup.textCursor()
-        word = cursor.selectedText()
-        if word == '':
+        self.word = cursor.selectedText()
+        if self.word == '':
             return
         else:
-            LookupDialog(word)
+            LookupDialog(self.word).search_word()

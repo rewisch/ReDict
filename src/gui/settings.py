@@ -12,7 +12,6 @@ from src.gui.all_windows import AllWindows
 class Settings_(QDialog, AllWindows):
     def __init__(self):
         QDialog.__init__(self)
-        self.load_form_pers(self)
         self.init_ui()
 
     def init_ui(self):
@@ -117,10 +116,9 @@ class Settings_(QDialog, AllWindows):
         self.save_completer()
         self.save_clipboard()
         self.save_search()
-        self.save_form_pers(self)
-
         if self.something_changed():
             self.restart()
+        super(AllWindows, self).closeEvent()
 
     def save_completer(self):
         if self.ui.rbtnLemmata.isChecked():

@@ -6,7 +6,7 @@ from src.database.database import Database
 class AllWindows():
     def __init__(self):
         self.db = Database()
-
+        self.load_form_pers(self)
 
     def load_form_pers(self, _class):
 

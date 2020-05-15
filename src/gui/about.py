@@ -10,7 +10,6 @@ class About(QDialog, AllWindows):
     def __init__(self):
         QDialog.__init__(self)
         self.init_ui()
-        self.load_form_pers(self)
 
     def init_ui(self):
         self.ui = uic.loadUi(os.path.abspath('_gui/about.ui'), self)

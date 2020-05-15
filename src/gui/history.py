@@ -12,7 +12,6 @@ class History(QDialog, AllWindows):
         QDialog.__init__(self)
         self.init_ui()
         self.searchFunc = searchFunc
-        self.load_form_pers(self)
 
     def init_ui(self):
         self.ui = uic.loadUi(os.path.abspath('_gui/history.ui'), self)

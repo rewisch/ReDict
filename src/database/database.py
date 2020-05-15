@@ -94,7 +94,7 @@ class Database():
         return self._execute(sql)
 
     def write_history(self, word_id):
-        sql = f"DELETE History WHERE WordId = {word_id}"
+        sql = f"DELETE FROM History WHERE WordId = {word_id}"
         self._execute(sql)
         sql = f"INSERT INTO History (WordId) VALUES ({word_id})"
         self._execute(sql)

@@ -26,14 +26,12 @@ clipboard_event = 0
 
 class MainWindow(QMainWindow, AllWindows):
     def __init__(self):
-        QMainWindow.__init__(self)
-        AllWindows.__init__(self)
+        super(QMainWindow, self).__init__()
+        super(AllWindows, self).__init__()
         self.init_ui()
 
     def init_ui(self):
         self.ui = uic.loadUi(os.path.abspath("_gui/main.ui"), self)
-        # flags = Qt.WindowFlags(Qt.FramelessWindowHint)
-        # self.setWindowFlags(flags)
         self.search = Search()
         self.load_form_pers(self)
         self.signal = MySignal()
@@ -187,10 +185,8 @@ class MainWindow(QMainWindow, AllWindows):
         prop = db.get_property(4)
         global autocomplete
 
-        if prop == 'Lemmata':
-            cmwords = db.read_database('SELECT DISTINCT Word FROM Word')
-        else:
-            cmwords = db.read_database('SELECT Flection FROM Flection')
+        sql = ('SELECT DISTINCT Word  FROM Word' if prop == 'Lemmata' else 'SELECT Flection FROM Flection')
+        cmwords = db.read_database(sql)
 
         words = dict()
         for r in cmwords:
@@ -241,11 +237,7 @@ class MainWindow(QMainWindow, AllWindows):
 
     def look_up(self):
         cursor = self.txtResult.textCursor()
-        word = cursor.selectedText()
-        if word == '':
-            return
-        else:
-            LookupDialog(word)
+        LookupDialog(cursor.selectedText()).search_word()
 
     def set_result(self, result):
         self.ui.txtResult.append(result)
