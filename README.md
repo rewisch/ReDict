@@ -38,11 +38,11 @@ Amoled:
 
 You can download an executable distribution of the software here:
 
-Mac: https://1drv.ms/u/s!AktcSmDEUbTzgah8UcQubAPhJaZTrQ?e=rnD3oY
+Mac: https://www.rewisch.ch/dist/ReDict/Mac/ReDict.zip
 
-Windows: https://1drv.ms/u/s!AktcSmDEUbTzgah96241x5zNHUbfhw?e=chATxH
+Windows: https://www.rewisch.ch/dist/ReDict/Windows/ReDict.zip
 
-Linux (64bit): https://1drv.ms/u/s!AktcSmDEUbTzgah-bqlOQHs9Wb2xNg?e=Rrxinw
+Linux (64bit): https://rewisch.ch/dist/ReDict/Linux/ReDict.zip
 
 # Technical
 
