@@ -26,23 +26,23 @@ Main Features:
 6. Choose different stylesheets
 
 Ubuntu:
-![Ubuntu](https://image.jimcdn.com/app/cms/image/transf/none/path/s042449d1eb1325c4/image/i770fed9960ec8898/version/1589308383/image.png)
+![Ubuntu](https://www.rewisch.ch/images/Ubuntu.png)
 
 Dark: 
-![Dark](https://image.jimcdn.com/app/cms/image/transf/none/path/s042449d1eb1325c4/image/i5eebb3521a9f9cd9/version/1589308553/image.png)
+![Dark](https://www.rewisch.ch/images/Dark.png)
 
 Amoled:
-![Ubuntu](https://image.jimcdn.com/app/cms/image/transf/none/path/s042449d1eb1325c4/image/i88396d3f35edb278/version/1589308566/image.png)
+![Ubuntu](https://www.rewisch.ch/images/Amoled.png)
 
 # Downloads
 
 You can download an executable distribution of the software here:
 
-Mac: https://1drv.ms/u/s!AktcSmDEUbTzgah8UcQubAPhJaZTrQ?e=rnD3oY
+Mac: https://www.rewisch.ch/dist/ReDict/Mac/ReDict.zip
 
-Windows: https://1drv.ms/u/s!AktcSmDEUbTzgah96241x5zNHUbfhw?e=chATxH
+Windows: https://www.rewisch.ch/dist/ReDict/Windows/ReDict.zip
 
-Linux (64bit): https://1drv.ms/u/s!AktcSmDEUbTzgah-bqlOQHs9Wb2xNg?e=Rrxinw
+Linux (64bit): https://rewisch.ch/dist/ReDict/Linux/ReDict.zip
 
 # Technical
 
