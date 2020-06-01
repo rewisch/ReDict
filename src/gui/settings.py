@@ -132,20 +132,13 @@ class Settings_(QDialog, AllWindows):
         qb.warning(self, 'Message', 'Please restart the application for the changes to take effect.')
 
     def save_clipboard(self):
-        if self.ui.clipboardEnable.isChecked():
-            self.clipboard_enabled = '1'
-        else:
-            self.clipboard_enabled = '0'
-
+        self.clipboard_enabled = '1' if self.ui.clipboardEnable.isChecked() else '0'
         self.db.set_property(5, self.clipboard_enabled)
         self.db.set_property(6, self.ui.txtSeconds.text())
         self.db.set_property(7, self.ui.txtTimes.text())
 
     def save_search(self):
-        if self.ui.abstractEnabled.isChecked():
-            abstract_enabled = '1'
-        else:
-            abstract_enabled = '0'
+        abstract_enabled = '1' if self.ui.abstractEnabled.isChecked() else '0'
         self.db.set_property(8, abstract_enabled)
 
 

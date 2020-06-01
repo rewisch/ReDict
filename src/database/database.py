@@ -110,8 +110,7 @@ class Database():
                 ORDER BY 
 	                HistoryId DESC
         """
-        data = self.cursor.execute(sql).fetchall()
-        return data
+        return self.cursor.execute(sql).fetchall()
 
     def clear_history(self):
         sql = 'DELETE FROM History'

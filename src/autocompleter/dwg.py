@@ -116,27 +116,27 @@ class AutoComplete:
         return new_words
 
     def _populate_dwg(self):
-        if not self._dwg:
-            with self._lock:
-                if not self._dwg:
-                    self._dwg = _DawgNode()
-                    for word, value in self.words.items():
-                        original_key = value.get(ORIGINAL_KEY)
-                        word = word.strip().lower()
-                        count = value.get('count', 0)
-                        leaf_node = self.insert_word_branch(
-                            word,
-                            original_key=original_key,
+        if self._dwg:
+            return
+        with self._lock:
+            self._dwg = _DawgNode()
+            for word, value in self.words.items():
+                original_key = value.get(ORIGINAL_KEY)
+                word = word.strip().lower()
+                count = value.get('count', 0)
+                leaf_node = self.insert_word_branch(
+                    word,
+                    original_key=original_key,
+                    count=count
+                )
+                if self._clean_synonyms:
+                    for synonym in self._clean_synonyms.get(word, []):
+                        self.insert_word_branch(
+                            synonym,
+                            leaf_node=leaf_node,
+                            add_word=False,
                             count=count
                         )
-                        if self._clean_synonyms:
-                            for synonym in self._clean_synonyms.get(word, []):
-                                self.insert_word_branch(
-                                    synonym,
-                                    leaf_node=leaf_node,
-                                    add_word=False,
-                                    count=count
-                                )
 
     def insert_word_callback(self, word):
         """
@@ -249,8 +249,6 @@ class AutoComplete:
         results = defaultdict(list)
         fuzzy_matches = defaultdict(list)
         rest_of_results = {}
-        fuzzy_matches_len = 0
-
         fuzzy_min_distance = min_distance = INF
         matched_prefix_of_last_word, rest_of_word, new_node, matched_words = self._prefix_autofill(word=word)
 
@@ -277,6 +275,8 @@ class AutoComplete:
             while len(new_word) < 5 and word_chunks:
                 new_word = f'{new_word} {word_chunks.popleft()}'
             fuzzy_rest_of_word = ' '.join(word_chunks)
+
+            fuzzy_matches_len = 0
 
             for _word in self.words:
                 if abs(len(_word) - len(new_word)) > max_cost:
@@ -358,11 +358,15 @@ class AutoComplete:
             if node.value.startswith(last_matched_word):
                 matched_words.pop()
         value = node.value
-        if self.PREFIX_AUTOFILL_PART_CONDITION_SUFFIX:
-            if self._node_word_info_matches_condition(node, self.prefix_autofill_part_condition):
-                matched_condition_in_branch = True
-                if matched_condition_ever and matched_prefix_of_last_word:
-                    value = f"{matched_prefix_of_last_word}{self.PREFIX_AUTOFILL_PART_CONDITION_SUFFIX}"
+        if (
+            self.PREFIX_AUTOFILL_PART_CONDITION_SUFFIX
+            and self._node_word_info_matches_condition(
+                node, self.prefix_autofill_part_condition
+            )
+        ):
+            matched_condition_in_branch = True
+            if matched_condition_ever and matched_prefix_of_last_word:
+                value = f"{matched_prefix_of_last_word}{self.PREFIX_AUTOFILL_PART_CONDITION_SUFFIX}"
         matched_words.append(value)
         return matched_words, matched_condition_in_branch
 

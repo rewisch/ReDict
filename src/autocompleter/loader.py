@@ -8,7 +8,7 @@ except ImportError:
     StrictRedis = None
 
 from typing import Any, Dict, List, NamedTuple, Optional, Set, Tuple, Union
-from AutoCompleterDwg import AutoComplete
+from src.autocompleter.dwg import AutoComplete
 
 
 def read_local_dump(filepath: str):

@@ -13,9 +13,9 @@ class AllWindows():
         Dialog = type(_class).__name__
 
         _class.settings = QSettings("Redict", Dialog)
-        if not _class.settings.value("geometry") == None:
+        if _class.settings.value("geometry") != None:
             _class.restoreGeometry(_class.settings.value("geometry"))
-        if not _class.settings.value("windowState") == None:
+        if _class.settings.value("windowState") != None:
             _class.restoreState(_class.settings.value("windowState"))
 
     def save_form_pers(self, _class):

@@ -63,27 +63,23 @@ class Initialize():
 
         if folder_name == 'georges_de-lat':
             file_name = 'georges'
-        elif folder_name == 'georges_lat-de':
-            file_name = 'stardict'
-        elif folder_name == 'lewis_short':
-            file_name = ''
-        else:
-            raise FileNotFoundError('No Dictionary found')
-
-        if folder_name == 'georges_de-lat':
             new_st_dict = stardict(path, folder_name, file_name)
             dictionary_id = new_st_dict.add_words_to_dictionary()
             new = WriteFlectionWithoutDeclination(dictionary_id)
             new.write()
 
         elif folder_name == 'georges_lat-de':
+            file_name = 'stardict'
             new_st_dict = stardict(path, folder_name, file_name)
             dictionary_id = new_st_dict.add_words_to_dictionary()
             new = WriteFlectionWithDeclination(dictionary_id)
             new.write()
 
         elif folder_name == 'lewis_short':
+            file_name = ''
             new = perseus('Lewis, Charlton, T. - An Elementary Latin Dictionary', 17582)
             dictionary_id = new.add_words_to_dictionary()
             new = WriteFlectionWithDeclination(dictionary_id)
             new.write()
+        else:
+            raise FileNotFoundError('No Dictionary found')

@@ -159,25 +159,25 @@ class MainWindow(QMainWindow, AllWindows):
 
     def eventFilter(self, o, event):
         # handle gesture event from txtResult
-        if event.type() == QEvent.Gesture:
-            fontsize = int(self.db.get_property(2))
-            g = event.gesture(Qt.PinchGesture)
-            f = event.gesture(Qt.TapAndHoldGesture)
-            # handle pinch
-            if g != None:
-                scale = g.scaleFactor()
-                fontsize = ceil(fontsize * scale)
-                self.zoom_fix(fontsize)
-                self.ui.update()
-            # handle tap
-            elif f != None:
-                c = self.ui.txtResult.textCursor()
-                if c.selectedText() == '':
-                    c.movePosition(QTextCursor.StartOfWord, QTextCursor.MoveAnchor)
-                    c.movePosition(QTextCursor.EndOfWord, QTextCursor.KeepAnchor)
-                    self.ui.txtResult.setTextCursor(c)
-            return True
-        return False
+        if event.type() != QEvent.Gesture:
+            return False
+        fontsize = int(self.db.get_property(2))
+        g = event.gesture(Qt.PinchGesture)
+        f = event.gesture(Qt.TapAndHoldGesture)
+        # handle pinch
+        if g != None:
+            scale = g.scaleFactor()
+            fontsize = ceil(fontsize * scale)
+            self.zoom_fix(fontsize)
+            self.ui.update()
+        # handle tap
+        elif f != None:
+            c = self.ui.txtResult.textCursor()
+            if c.selectedText() == '':
+                c.movePosition(QTextCursor.StartOfWord, QTextCursor.MoveAnchor)
+                c.movePosition(QTextCursor.EndOfWord, QTextCursor.KeepAnchor)
+                self.ui.txtResult.setTextCursor(c)
+        return True
 
     def loading(self):
         self.spinner.start()
@@ -189,7 +189,7 @@ class MainWindow(QMainWindow, AllWindows):
 
     def txt_search_changed(self, changeValue):
         global autocomplete
-        entries = list()
+        entries = []
         names = autocomplete.search(word=changeValue, max_cost=3, size=10)
         for name in names:
             entries.append(name[0])
@@ -210,7 +210,7 @@ class MainWindow(QMainWindow, AllWindows):
         sql = ('SELECT DISTINCT Word  FROM Word' if prop == 'Lemmata' else 'SELECT Flection FROM Flection')
         cmwords = db.read_database(sql)
 
-        words = dict()
+        words = {}
         for r in cmwords:
             words.setdefault(r[0], {})
         del cmwords

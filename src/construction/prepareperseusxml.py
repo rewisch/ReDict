@@ -7,7 +7,7 @@ folder_path = abspath('../data/dictionaries/lewis_short/')
 
 def perseus_xml_read():
 
-    replaces = list()
+    replaces = []
     file = open(join(folder_path,'sed_commands.txt'), 'r', encoding='Utf-8')
     input = file.readlines()
 
@@ -34,7 +34,7 @@ def perseus_xml_read():
     content = open(join(folder_path, 'lewis_rep.xml'), encoding='Utf-8')
     soup = BeautifulSoup(content, 'xml')
 
-    lst_lewis = list()
+    lst_lewis = []
 
     for res in tqdm(soup.find_all('entry')):
         _key = res.get('key')

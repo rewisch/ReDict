@@ -26,11 +26,9 @@ def read_csv_gen(path_or_stringio, csv_func=csv.reader, **kwargs):
         _check_file_exists(path_or_stringio)
         encoding = kwargs.pop('encoding', 'utf-8-sig')
         with open(path_or_stringio, 'r', encoding=encoding) as csvfile:
-            for i in csv_func(csvfile, **kwargs):
-                yield i
+            yield from csv_func(csvfile, **kwargs)
     elif isinstance(path_or_stringio, io.StringIO):
-        for i in csv_func(path_or_stringio, **kwargs):
-            yield i
+        yield from csv_func(path_or_stringio, **kwargs)
     else:
         raise TypeError('Either a path to the file or StringIO object needs to be passed.')
 
