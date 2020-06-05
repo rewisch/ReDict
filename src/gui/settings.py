@@ -45,6 +45,7 @@ class Settings_(QDialog, AllWindows):
             dictionary_id = r[0]
             dictionary_name = r[1]
             self.add_checkbox(dictionary_id, str(dictionary_id) + ': ' + dictionary_name)
+        self.add_checkbox(99, '99: Navigium')
         self.tabWidget.widget(0).setLayout(self.layout)
 
     def load_completer(self):

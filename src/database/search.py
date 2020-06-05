@@ -1,8 +1,12 @@
 from bs4 import BeautifulSoup
 from src.gui.all_windows import AllWindows
 from src.database.NavigiumCrawler import NavigiumCrawler as nav
+from src.database.database import Database
 
 class Search(AllWindows):
+
+    def __init__(self):
+        self.db = Database()
 
     def search_word(self, wrd, like):
         data = self.db.search_word(wrd, like)
@@ -17,8 +21,11 @@ class Search(AllWindows):
             self.db.write_history(wordid)
         else:
             result = 'Not found'
-        nav_result = nav.search(wrd)
-        result = nav_result + result
+
+        ## 99 is the database id of Navigium
+        if '99' in self.db.get_property(1):
+            nav_result = nav.search(wrd)
+            result = nav_result + result
 
         return result
 
