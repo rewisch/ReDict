@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from src.gui.all_windows import AllWindows
+from src.database.NavigiumCrawler import NavigiumCrawler as nav
 
 class Search(AllWindows):
 
@@ -11,11 +12,13 @@ class Search(AllWindows):
                 wordid, word, definition, abstractive = d
                 if abstractive and int(self.db.get_property(8)):
                     result = result + self.get_abstraction(definition) + '<br>'
-                result = result + definition.rstrip('<br />').replace('<br>', '') \
+                result = result + definition.replace('<br />', '').replace('<br>', '') \
                          + '<br>---------------------------<br>'
             self.db.write_history(wordid)
         else:
             result = 'Not found'
+        nav_result = nav.search(wrd)
+        result = nav_result + result
 
         return result
 
