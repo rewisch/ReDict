@@ -51,5 +51,5 @@ setup(
     options={'py2app': OPTIONS},
     packages=find_packages(''),
     setup_requires=['py2app', 'setuptools', 'PyQt5', 'bs4', 'cltk',
-                    'lxml', 'Python-Levenshtein', 'PyStarDict', 'tqdm']
+                    'lxml', 'Python-Levenshtein', 'PyStarDict', 'tqdm', 'requests']
 )
