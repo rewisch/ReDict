@@ -4,7 +4,7 @@ Python-Levenshtein==0.12.0
 cltk==0.1.117
 tqdm==4.46.0
 PyStarDict==0.8
-lxml==4.5.0
+lxml==4.6.5
 setuptools==46.2.0
 wheel==0.34.2
 PyInstaller==3.6
