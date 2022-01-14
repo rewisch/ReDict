@@ -8,7 +8,7 @@
 
 # ReDict - A Latin Dictionary 
 
-There’s no shortage of available Latin dictionaries both off- and online. I came up with this additional dictionary for the existing dictionaries – at least the once I'm aware of – lacked some features I’d like to have. Besides, it was a fun project to write in Python and to explore its main concepts and features. It's my first real "programming project", so please pardon if things might not be done as they should. Feel free to correct though, I'd be more than happy. 
+There’s no shortage of available Latin dictionaries both off- and online. I came up with this additional dictionary for the existing dictionaries – at least the once I'm aware of – lacked some features I’d like to have. Besides, it was a fun project to write in Python and to explore its main concepts and features. It's my first real "programming project" in python, so please pardon if things might not be done as they should. Feel free to correct though, I'd be more than happy. 
 
 Main Features:
 1.    Not a feature but nice to have: ReDict has support for touch gestures. 
