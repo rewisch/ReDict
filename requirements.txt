@@ -6,7 +6,7 @@ tqdm==4.46.0
 PyStarDict==0.8
 lxml==4.5.0
 setuptools==46.2.0
-wheel==0.34.2
+wheel==0.38.1
 PyInstaller==3.6
 bs4==0.0.1
 requests==2.23.0
