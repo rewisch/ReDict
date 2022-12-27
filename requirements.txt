@@ -5,7 +5,7 @@ cltk==0.1.117
 tqdm==4.46.0
 PyStarDict==0.8
 lxml==4.5.0
-setuptools==46.2.0
+setuptools==65.5.1
 wheel==0.34.2
 PyInstaller==3.6
 bs4==0.0.1
